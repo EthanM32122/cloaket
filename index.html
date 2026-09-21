@@ -6,12 +6,9 @@
 <title>Cloaket</title>
 <style>
   :root {
-    --purple: #8b5cf6;
-    --purple-dark: #6d28d9;
     --bg: #0f0a1a;
     --card: #1a1025;
-    --text: #e9d5ff;
-    --white: #ffffff;
+    --border: #2e1065;
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -19,9 +16,18 @@
   body {
     font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
     min-height: 100vh;
-    color: var(--text);
     background: #0f0a1a;
+    color: #e9d5ff;
     overflow-x: hidden;
+  }
+
+  /* Rainbow text */
+  .rainbow {
+    background: linear-gradient(90deg, #ef4444, #f59e0b, #22c55e, #3b82f6, #8b5cf6, #ec4899, #ef4444);
+    background-size: 300% 100%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
 
   /* ========== LANDING PAGE ========== */
@@ -29,60 +35,58 @@
     display: flex;
     min-height: 100vh;
     position: relative;
-    background: linear-gradient(160deg, #0f0a1a 0%, #1a1025 40%, #2e1065 100%);
   }
 
-  .landing-content {
+  .landing-left {
     flex: 1;
+    background: linear-gradient(160deg, #0f0a1a 0%, #1a1025 50%, #2e1065 100%);
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
-    text-align: center;
-    padding: 40px 20px;
+    padding: 60px 50px;
     z-index: 2;
   }
 
+  .landing-right {
+    flex: 1;
+    background: #0f0a1a;
+    position: relative;
+    border-left: 1px solid #2e1065;
+  }
+
   .logo {
-    font-size: clamp(3.5rem, 8vw, 5.5rem);
+    font-size: clamp(3.2rem, 6vw, 5rem);
     font-weight: 900;
     line-height: 0.95;
     letter-spacing: -2px;
-    color: #ffffff;
-    text-shadow: 4px 4px 0 #4c1d95;
     margin-bottom: 20px;
   }
   .logo span { display: block; }
 
   .tagline {
     font-size: 1.15rem;
-    opacity: 0.85;
     margin-bottom: 8px;
-    color: #c4b5fd;
+    max-width: 340px;
   }
   .beta {
     font-size: 0.95rem;
-    opacity: 0.6;
+    opacity: 0.7;
     margin-bottom: 40px;
-    color: #a78bfa;
   }
 
   .get-started-btn {
     display: inline-block;
-    padding: 14px 40px;
+    padding: 14px 36px;
     border: 2px solid #8b5cf6;
     border-radius: 999px;
     background: transparent;
-    color: white;
-    font-size: 1.15rem;
+    font-size: 1.1rem;
     font-weight: 700;
     cursor: pointer;
-    transition: all 0.2s;
     font-family: inherit;
   }
   .get-started-btn:hover {
-    background: #8b5cf6;
-    color: white;
+    background: #2e1065;
   }
 
   /* Top right Login/Register */
@@ -102,24 +106,18 @@
     cursor: pointer;
     border: none;
     font-family: inherit;
-    transition: all 0.2s;
+    background: #1a1025;
+    border: 1px solid #4c1d95;
   }
-  .top-auth .login-btn {
-    background: transparent;
-    color: white;
-    border: 1px solid rgba(255,255,255,0.4);
+  .top-auth button:hover {
+    background: #2e1065;
   }
-  .top-auth .register-btn {
-    background: #7c3aed;
-    color: white;
-  }
-  .top-auth button:hover { opacity: 0.9; }
 
   /* ========== MODALS ========== */
   .modal-overlay {
     position: fixed;
     inset: 0;
-    background: rgba(0, 0, 0, 0.8);
+    background: rgba(0, 0, 0, 0.85);
     display: none;
     align-items: center;
     justify-content: center;
@@ -137,7 +135,6 @@
     max-width: 380px;
     position: relative;
     color: #e9d5ff;
-    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
   }
 
   .modal-header {
@@ -147,19 +144,18 @@
     margin-bottom: 22px;
   }
   .modal-title {
-    background: #2e1065;
-    color: #c4b5fd;
     font-weight: 800;
-    font-size: 1.3rem;
+    font-size: 1.35rem;
     padding: 8px 20px;
     border-radius: 999px;
+    background: #2e1065;
   }
   .close-btn {
     background: none;
     border: none;
     font-size: 1.6rem;
-    color: #a78bfa;
     cursor: pointer;
+    color: #a78bfa;
   }
   .modal input {
     width: 100%;
@@ -179,12 +175,12 @@
     width: 100%;
     padding: 15px;
     background: #7c3aed;
-    color: white;
     border: none;
     border-radius: 12px;
-    font-size: 1.1rem;
+    font-size: 1.15rem;
     font-weight: 700;
     cursor: pointer;
+    color: white;
   }
   .modal-btn:hover { background: #6d28d9; }
 
@@ -192,10 +188,8 @@
     text-align: center;
     margin-top: 18px;
     font-size: 0.95rem;
-    color: #a78bfa;
   }
   .switch-text a {
-    color: #c4b5fd;
     font-weight: 700;
     cursor: pointer;
   }
@@ -231,7 +225,6 @@
     font-weight: 900;
     text-align: center;
     margin-bottom: 6px;
-    color: #c4b5fd;
   }
 
   .sidebar-user {
@@ -239,7 +232,6 @@
     font-size: 0.9rem;
     opacity: 0.7;
     margin-bottom: 28px;
-    color: #a78bfa;
   }
 
   .nav-item {
@@ -251,7 +243,6 @@
     cursor: pointer;
     margin-bottom: 4px;
     font-weight: 600;
-    transition: background 0.15s;
     color: rgba(255,255,255,0.8);
   }
   .nav-item:hover, .nav-item.active {
@@ -269,11 +260,11 @@
     padding: 12px;
     background: transparent;
     border: 1px solid #4c1d95;
-    color: #c4b5fd;
     border-radius: 10px;
     font-weight: 600;
     cursor: pointer;
     font-family: inherit;
+    color: #c4b5fd;
   }
   .logout-btn:hover { background: #2e1065; }
 
@@ -287,16 +278,9 @@
   .page-title {
     font-size: 1.8rem;
     font-weight: 800;
-    color: white;
     margin-bottom: 6px;
   }
-  .page-subtitle {
-    color: #a78bfa;
-    margin-bottom: 28px;
-    font-size: 0.95rem;
-  }
 
-  /* Stats bar */
   .stats-bar {
     display: flex;
     gap: 14px;
@@ -310,49 +294,13 @@
     padding: 18px 24px;
     min-width: 130px;
     text-align: center;
-    color: white;
   }
   .stat-value {
     font-size: 1.7rem;
     font-weight: 800;
-    color: #c4b5fd;
   }
-  .stat-label { font-size: 0.85rem; opacity: 0.7; margin-top: 4px; color: #a78bfa; }
+  .stat-label { font-size: 0.85rem; opacity: 0.7; margin-top: 4px; }
 
-  /* Grid cards */
-  .card-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 16px;
-  }
-
-  .blook-card {
-    background: #1a1025;
-    border: 1px solid #2e1065;
-    border-radius: 16px;
-    padding: 22px;
-    cursor: pointer;
-    transition: border-color 0.15s;
-  }
-  .blook-card:hover {
-    border-color: #7c3aed;
-  }
-  .blook-card .icon {
-    font-size: 2rem;
-    margin-bottom: 10px;
-    display: block;
-  }
-  .blook-card h3 {
-    font-size: 1.15rem;
-    color: #c4b5fd;
-    margin-bottom: 5px;
-  }
-  .blook-card p {
-    font-size: 0.9rem;
-    color: #6b7280;
-  }
-
-  /* Panel view */
   .panel-view {
     display: none;
     background: #1a1025;
@@ -364,24 +312,10 @@
   .panel-view.active { display: block; }
 
   .panel-view h2 {
-    color: #c4b5fd;
     margin-bottom: 18px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     font-size: 1.4rem;
+    font-weight: 800;
   }
-  .back-btn {
-    background: #2e1065;
-    border: none;
-    color: #c4b5fd;
-    padding: 7px 14px;
-    border-radius: 999px;
-    font-weight: 700;
-    cursor: pointer;
-    font-size: 0.85rem;
-  }
-  .back-btn:hover { background: #4c1d95; }
 
   .blank-area {
     background: #0f0a1a;
@@ -389,17 +323,16 @@
     border-radius: 12px;
     padding: 40px 20px;
     text-align: center;
-    color: #a78bfa;
     font-weight: 600;
+    opacity: 0.8;
   }
 
-  .hidden { display: none !important; }
-
   @media (max-width: 768px) {
+    #landing { flex-direction: column; }
+    .landing-right { min-height: 150px; }
     .sidebar { width: 70px; }
     .nav-item span:not(.icon) { display: none; }
     .sidebar-logo { font-size: 1.1rem; }
-    .main-content { padding: 20px; }
   }
 </style>
 </head>
@@ -408,36 +341,38 @@
 <!-- ========== LANDING ========== -->
 <div id="landing">
   <div class="top-auth">
-    <button class="login-btn" onclick="openModal('login')">Login</button>
-    <button class="register-btn" onclick="openModal('register')">Register</button>
+    <button class="login-btn" onclick="openModal('login')"><span class="rainbow">Login</span></button>
+    <button class="register-btn" onclick="openModal('register')"><span class="rainbow">Register</span></button>
   </div>
 
-  <div class="landing-content">
+  <div class="landing-left">
     <div class="logo">
-      <span>Cloaket</span>
-      <span>Blooket.</span>
-      <span>But.</span>
-      <span>Cloaket.</span>
+      <span class="rainbow">Cloaket</span>
+      <span class="rainbow">Blooket.</span>
+      <span class="rainbow">But.</span>
+      <span class="rainbow">Cloaket.</span>
     </div>
-    <div class="tagline">The first cloak-themed Blooket private server</div>
-    <div class="beta">Currently in Beta</div>
-    <button class="get-started-btn" onclick="openModal('register')">Get Started</button>
+    <div class="tagline rainbow">The first cloak-themed Blooket private server</div>
+    <div class="beta rainbow">Currently in Beta</div>
+    <button class="get-started-btn" onclick="openModal('register')"><span class="rainbow">Get Started</span></button>
   </div>
+
+  <div class="landing-right"></div>
 </div>
 
 <!-- ========== MODALS ========== -->
 <div class="modal-overlay" id="loginModal">
   <div class="modal">
     <div class="modal-header">
-      <div class="modal-title">Login</div>
+      <div class="modal-title"><span class="rainbow">Login</span></div>
       <button class="close-btn" onclick="closeModals()">×</button>
     </div>
     <div class="error-msg" id="loginError"></div>
     <input type="text" id="loginUser" placeholder="Username" autocomplete="username">
     <input type="password" id="loginPass" placeholder="Password" autocomplete="current-password">
-    <button class="modal-btn" onclick="doLogin()">Login</button>
+    <button class="modal-btn" onclick="doLogin()"><span class="rainbow">Login</span></button>
     <div class="switch-text">
-      Don't have an account? <a onclick="switchModal('register')">Register</a>
+      Don't have an account? <a onclick="switchModal('register')"><span class="rainbow">Register</span></a>
     </div>
   </div>
 </div>
@@ -445,25 +380,24 @@
 <div class="modal-overlay" id="registerModal">
   <div class="modal">
     <div class="modal-header">
-      <div class="modal-title">Register</div>
+      <div class="modal-title"><span class="rainbow">Register</span></div>
       <button class="close-btn" onclick="closeModals()">×</button>
     </div>
     <div class="error-msg" id="regError"></div>
     <input type="text" id="regUser" placeholder="Username" autocomplete="username">
     <input type="password" id="regPass" placeholder="Password" autocomplete="new-password">
     <input type="password" id="regPass2" placeholder="Confirm Password" autocomplete="new-password">
-    <button class="modal-btn" onclick="doRegister()">Create Account</button>
+    <button class="modal-btn" onclick="doRegister()"><span class="rainbow">Create Account</span></button>
     <div class="switch-text">
-      Already have an account? <a onclick="switchModal('login')">Login</a>
+      Already have an account? <a onclick="switchModal('login')"><span class="rainbow">Login</span></a>
     </div>
   </div>
 </div>
 
-<!-- ========== APP (after login) ========== -->
+<!-- ========== APP ========== -->
 <div id="app">
-  <!-- LEFT SIDEBAR -->
   <div class="sidebar">
-    <div class="sidebar-logo">Cloaket</div>
+    <div class="sidebar-logo"><span class="rainbow">Cloaket</span></div>
     <div class="sidebar-user" id="sidebarUser">Player</div>
 
     <div class="nav-item active" onclick="showPage('stats')" data-page="stats">
@@ -483,77 +417,54 @@
     </div>
 
     <div class="sidebar-bottom">
-      <button class="logout-btn" onclick="logout()">Logout</button>
+      <button class="logout-btn" onclick="logout()"><span class="rainbow">Logout</span></button>
     </div>
   </div>
 
-  <!-- MAIN CONTENT -->
   <div class="main-content">
-    <!-- STATS (default page) -->
     <div id="page-stats" class="panel-view active">
-      <h2>Your Stats</h2>
+      <h2 class="rainbow">Your Stats</h2>
       <div class="stats-bar">
         <div class="stat-card">
-          <div class="stat-value" id="statCloaks">0</div>
+          <div class="stat-value rainbow" id="statCloaks">0</div>
           <div class="stat-label">Cloaks</div>
         </div>
         <div class="stat-card">
-          <div class="stat-value" id="statItems">0</div>
+          <div class="stat-value rainbow" id="statItems">0</div>
           <div class="stat-label">Items</div>
         </div>
       </div>
-      <div class="blank-area">
-        More detailed stats coming soon.
-      </div>
+      <div class="blank-area">More detailed stats coming soon.</div>
     </div>
 
-    <!-- MARKET -->
     <div id="page-market" class="panel-view">
-      <h2>Cloaks Market</h2>
-      <div class="blank-area">
-        Market is currently empty.<br>
-        <small style="opacity:0.6">New cloaks coming soon...</small>
-      </div>
+      <h2 class="rainbow">Cloaks Market</h2>
+      <div class="blank-area">Market is currently empty.<br><small style="opacity:0.6">New cloaks coming soon...</small></div>
     </div>
 
-    <!-- INVENTORY -->
     <div id="page-inventory" class="panel-view">
-      <h2>Inventory</h2>
-      <div class="blank-area">
-        Your inventory is empty.<br>
-        <small style="opacity:0.6">Collect cloaks and items here.</small>
-      </div>
+      <h2 class="rainbow">Inventory</h2>
+      <div class="blank-area">Your inventory is empty.<br><small style="opacity:0.6">Collect cloaks and items here.</small></div>
     </div>
 
-    <!-- LEADERBOARD -->
     <div id="page-leaderboard" class="panel-view">
-      <h2>Leaderboard</h2>
-      <div class="blank-area">
-        No rankings yet.<br>
-        <small style="opacity:0.6">Check back later!</small>
-      </div>
+      <h2 class="rainbow">Leaderboard</h2>
+      <div class="blank-area">No rankings yet.<br><small style="opacity:0.6">Check back later!</small></div>
     </div>
 
-    <!-- SETTINGS -->
     <div id="page-settings" class="panel-view">
-      <h2>Settings</h2>
-      <div class="blank-area">
-        Settings coming soon.<br>
-        <small style="opacity:0.6">Account options will appear here.</small>
-      </div>
+      <h2 class="rainbow">Settings</h2>
+      <div class="blank-area">Settings coming soon.<br><small style="opacity:0.6">Account options will appear here.</small></div>
     </div>
   </div>
 </div>
 
 <script>
-  // ========== AUTH ==========
   function safeGet(key, fallback) {
-    try { return localStorage.getItem(key) || fallback; }
-    catch (e) { return fallback; }
+    try { return localStorage.getItem(key) || fallback; } catch (e) { return fallback; }
   }
   function safeSet(key, value) {
-    try { localStorage.setItem(key, value); return true; }
-    catch (e) { return false; }
+    try { localStorage.setItem(key, value); return true; } catch (e) { return false; }
   }
 
   function openModal(type) {
@@ -643,19 +554,15 @@
     } catch(e) {}
   });
 
-  // ========== NAVIGATION ==========
   function showPage(page) {
     document.querySelectorAll('.panel-view').forEach(p => p.classList.remove('active'));
     document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-
     const nav = document.querySelector(`.nav-item[data-page="${page}"]`);
     if (nav) nav.classList.add('active');
-
     const panel = document.getElementById('page-' + page);
     if (panel) panel.classList.add('active');
   }
 
-  // ========== STATS ==========
   function loadStats(username) {
     const key = 'cloaket_stats_' + username;
     const stats = JSON.parse(localStorage.getItem(key) || '{"cloaks":0,"items":0}');
