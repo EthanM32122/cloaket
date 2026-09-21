@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cloaket</title>
+<style>
+  :root {
+    --purple: #7c5cbf;
+    --purple-dark: #5a3d9a;
+    --purple-light: #a78bfa;
+    --bg: #1a1025;
+    --card: #f3e8ff;
+    --text: #1e1033;
+    --accent: #8b5cf6;
+    --white: #ffffff;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: linear-gradient(160deg, #1a1025 0%, #2d1b4e 40%, #4c1d95 100%);
+    min-height: 100vh;
+    color: var(--white);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: 
+      radial-gradient(circle at 20% 30%, rgba(139, 92, 246, 0.15) 0%, transparent 40%),
+      radial-gradient(circle at 80% 70%, rgba(91, 33, 182, 0.2) 0%, transparent 40%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    max-width: 700px;
+    width: 100%;
+  }
+
+  .logo {
+    font-size: clamp(3.5rem, 10vw, 5.5rem);
+    font-weight: 900;
+    line-height: 0.95;
+    letter-spacing: -2px;
+    color: #ffffff;
+    text-shadow: 4px 4px 0 #5b21b6, 8px 8px 0 rgba(0,0,0,0.3);
+    margin-bottom: 8px;
+  }
+  .logo span { display: block; }
+
+  .tagline { font-size: 1.15rem; opacity: 0.85; margin: 18px 0 8px; font-weight: 500; }
+  .beta { font-size: 0.95rem; opacity: 0.7; margin-bottom: 36px; }
+
+  .btn-row {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 30px;
+  }
+
+  .btn {
+    padding: 14px 36px;
+    border-radius: 999px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s ease;
+    font-family: inherit;
+  }
+
+  .btn-primary {
+    background: #ffffff;
+    color: #5b21b6;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+  }
+  .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(0,0,0,0.35); }
+
+  .btn-outline {
+    background: transparent;
+    color: white;
+    border: 2px solid rgba(255,255,255,0.7);
+  }
+  .btn-outline:hover { background: rgba(255,255,255,0.12); border-color: white; }
+
+  .footer-note { margin-top: 40px; font-size: 0.9rem; opacity: 0.6; }
+
+  /* ========== MODALS ========== */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(10, 5, 20, 0.82);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    padding: 20px;
+  }
+  .modal-overlay.active { display: flex; }
+
+  .modal {
+    background: #f3e8ff;
+    border-radius: 24px;
+    padding: 32px 28px;
+    width: 100%;
+    max-width: 380px;
+    position: relative;
+    color: #1e1033;
+    box-shadow: 0 25px 60px rgba(0,0,0,0.55);
+    animation: popIn 0.25s ease;
+  }
+
+  @keyframes popIn {
+    from { transform: scale(0.9); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+  }
+
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+  }
+
+  .modal-title {
+    background: #ddd6fe;
+    color: #5b21b6;
+    font-weight: 800;
+    font-size: 1.4rem;
+    padding: 8px 22px;
+    border-radius: 999px;
+  }
+
+  .close-btn {
+    background: none;
+    border: none;
+    font-size: 1.6rem;
+    color: #7c3aed;
+    cursor: pointer;
+    line-height: 1;
+    padding: 4px;
+  }
+  .close-btn:hover { color: #4c1d95; }
+
+  .modal input {
+    width: 100%;
+    padding: 14px 16px;
+    margin-bottom: 14px;
+    border: none;
+    border-radius: 12px;
+    background: #ede9fe;
+    font-size: 1rem;
+    font-family: inherit;
+    color: #1e1033;
+  }
+  .modal input::placeholder { color: #a78bfa; }
+  .modal input:focus { outline: 2px solid #8b5cf6; }
+
+  .modal-btn {
+    width: 100%;
+    padding: 15px;
+    background: #7c3aed;
+    color: white;
+    border: none;
+    border-radius: 14px;
+    font-size: 1.15rem;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 8px;
+    transition: background 0.2s;
+  }
+  .modal-btn:hover { background: #6d28d9; }
+
+  .switch-text {
+    text-align: center;
+    margin-top: 18px;
+    font-size: 0.95rem;
+    color: #6b21a8;
+  }
+  .switch-text a {
+    color: #7c3aed;
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .switch-text a:hover { text-decoration: underline; }
+
+  .error-msg {
+    color: #dc2626;
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+    text-align: center;
+    min-height: 20px;
+  }
+
+  /* ========== USER BAR ========== */
+  .user-bar {
+    position: fixed;
+    top: 16px;
+    right: 16px;
+    background: rgba(0,0,0,0.4);
+    padding: 8px 16px;
+    border-radius: 999px;
+    font-size: 0.9rem;
+    display: none;
+    align-items: center;
+    gap: 12px;
+    z-index: 50;
+  }
+  .user-bar.active { display: flex; }
+
+  .logout-btn {
+    background: none;
+    border: 1px solid rgba(255,255,255,0.4);
+    color: white;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    cursor: pointer;
+  }
+  .logout-btn:hover { background: rgba(255,255,255,0.1); }
+
+  /* ========== LOBBY / DASHBOARD ========== */
+  .lobby {
+    display: none;
+    width: 100%;
+    max-width: 900px;
+    z-index: 1;
+    position: relative;
+  }
+  .lobby.active { display: block; }
+
+  .lobby-header {
+    text-align: center;
+    margin-bottom: 28px;
+  }
+  .lobby-header h1 {
+    font-size: 2.4rem;
+    font-weight: 800;
+    text-shadow: 2px 2px 0 #5b21b6;
+  }
+  .lobby-header p { opacity: 0.8; margin-top: 6px; }
+
+  .lobby-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 18px;
+    margin-bottom: 24px;
+  }
+
+  .lobby-card {
+    background: rgba(243, 232, 255, 0.95);
+    color: #1e1033;
+    border-radius: 18px;
+    padding: 24px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: 2px solid transparent;
+    text-align: left;
+  }
+  .lobby-card:hover {
+    transform: translateY(-4px);
+    border-color: #a78bfa;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.3);
+  }
+  .lobby-card h3 {
+    font-size: 1.25rem;
+    margin-bottom: 8px;
+    color: #5b21b6;
+  }
+  .lobby-card p {
+    font-size: 0.95rem;
+    opacity: 0.75;
+  }
+  .lobby-card .icon {
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+  }
+
+  .stats-bar {
+    background: rgba(0,0,0,0.3);
+    border-radius: 16px;
+    padding: 16px 22px;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  .stat-item { text-align: center; }
+  .stat-value { font-size: 1.5rem; font-weight: 800; color: #c4b5fd; }
+  .stat-label { font-size: 0.85rem; opacity: 0.7; }
+
+  /* ========== PANEL (for market, stats etc) ========== */
+  .panel {
+    display: none;
+    background: #f3e8ff;
+    color: #1e1033;
+    border-radius: 20px;
+    padding: 28px;
+    max-width: 600px;
+    width: 100%;
+    margin: 0 auto;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.35);
+  }
+  .panel.active { display: block; }
+
+  .panel h2 {
+    color: #4c1d95;
+    margin-bottom: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .panel .back-btn {
+    background: #ddd6fe;
+    border: none;
+    color: #5b21b6;
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-weight: 700;
+    cursor: pointer;
+    font-size: 0.9rem;
+  }
+  .panel .back-btn:hover { background: #c4b5fd; }
+
+  .blank-area {
+    background: #ede9fe;
+    border: 2px dashed #c4b5fd;
+    border-radius: 14px;
+    padding: 40px 20px;
+    text-align: center;
+    color: #7c3aed;
+    font-weight: 600;
+    margin-top: 12px;
+  }
+
+  /* ========== GAME SECTION ========== */
+  .game-section { display: none; width: 100%; max-width: 520px; }
+  .game-section.active { display: block; }
+
+  .card {
+    background: #f3e8ff;
+    color: #1e1033;
+    border-radius: 20px;
+    padding: 28px;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.35);
+  }
+  .card h2 { margin-bottom: 18px; color: #4c1d95; }
+
+  .card input, .card select, .card textarea, .card button {
+    width: 100%;
+    padding: 12px 14px;
+    margin: 8px 0 16px;
+    border: 2px solid #c4b5fd;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-family: inherit;
+  }
+  .card button {
+    background: #7c3aed;
+    color: white;
+    border: none;
+    font-weight: 700;
+    cursor: pointer;
+  }
+  .card button:hover { background: #6d28d9; }
+
+  .scoreboard {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 18px;
+    font-weight: 700;
+    font-size: 1.1rem;
+  }
+
+  .progress {
+    height: 10px;
+    background: #ddd6fe;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    overflow: hidden;
+  }
+  .progress-bar {
+    height: 100%;
+    background: #7c3aed;
+    width: 0%;
+    transition: width 0.4s ease;
+  }
+
+  .question-box {
+    font-size: 1.35rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+    line-height: 1.4;
+  }
+
+  .answers { display: grid; gap: 12px; }
+
+  .answer-btn {
+    background: #ede9fe;
+    color: #1e1033;
+    border: 2px solid #c4b5fd;
+    text-align: left;
+    font-weight: 600;
+    padding: 14px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .answer-btn:hover { background: #ddd6fe; }
+  .answer-btn.correct { background: #bbf7d0; border-color: #16a34a; }
+  .answer-btn.wrong { background: #fecaca; border-color: #dc2626; }
+
+  .final-score {
+    font-size: 2.8rem;
+    font-weight: 800;
+    color: #7c3aed;
+    text-align: center;
+    margin: 20px 0;
+  }
+
+  .hidden { display: none !important; }
+</style>
+</head>
+<body>
+
+<!-- USER BAR -->
+<div class="user-bar" id="userBar">
+  <span id="loggedInName">Player</span>
+  <button class="logout-btn" onclick="logout()">Logout</button>
+</div>
+
+<!-- ========== LANDING ========== -->
+<div class="container" id="landing">
+  <div class="logo">
+    <span>Cloaket</span>
+    <span>Blooket.</span>
+    <span>But.</span>
+    <span>Cloaket.</span>
+  </div>
+  <div class="tagline">The first cloak-themed Blooket private server</div>
+  <div class="beta">Currently in Beta</div>
+
+  <div class="btn-row">
+    <button class="btn btn-primary" onclick="openModal('login')">Login</button>
+    <button class="btn btn-outline" onclick="openModal('register')">Register</button>
+  </div>
+
+  <div class="footer-note">Cloaket • A purple cloak-themed learning race</div>
+</div>
+
+<!-- ========== LOGIN MODAL ========== -->
+<div class="modal-overlay" id="loginModal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">Login</div>
+      <button class="close-btn" onclick="closeModals()">×</button>
+    </div>
+    <div class="error-msg" id="loginError"></div>
+    <input type="text" id="loginUser" placeholder="Username" autocomplete="username">
+    <input type="password" id="loginPass" placeholder="Password" autocomplete="current-password">
+    <button class="modal-btn" onclick="doLogin()">Login</button>
+    <div class="switch-text">
+      Don't have an account? <a onclick="switchModal('register')">Register</a>
+    </div>
+  </div>
+</div>
+
+<!-- ========== REGISTER MODAL ========== -->
+<div class="modal-overlay" id="registerModal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">Register</div>
+      <button class="close-btn" onclick="closeModals()">×</button>
+    </div>
+    <div class="error-msg" id="regError"></div>
+    <input type="text" id="regUser" placeholder="Username" autocomplete="username">
+    <input type="password" id="regPass" placeholder="Password" autocomplete="new-password">
+    <input type="password" id="regPass2" placeholder="Confirm Password" autocomplete="new-password">
+    <button class="modal-btn" onclick="doRegister()">Create Account</button>
+    <div class="switch-text">
+      Already have an account? <a onclick="switchModal('login')">Login</a>
+    </div>
+  </div>
+</div>
+
+<!-- ========== LOBBY / DASHBOARD ========== -->
+<div class="lobby" id="lobby">
+  <div class="lobby-header">
+    <h1>Welcome, <span id="lobbyName">Player</span></h1>
+    <p>Choose where to go</p>
+  </div>
+
+  <div class="stats-bar">
+    <div class="stat-item">
+      <div class="stat-value" id="statGames">0</div>
+      <div class="stat-label">Games Played</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-value" id="statHigh">0</div>
+      <div class="stat-label">High Score</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-value" id="statCloaks">0</div>
+      <div class="stat-label">Cloaks</div>
+    </div>
+  </div>
+
+  <div class="lobby-grid">
+    <div class="lobby-card" onclick="openPanel('play')">
+      <div class="icon">🏁</div>
+      <h3>Play Race</h3>
+      <p>Start a classic question race</p>
+    </div>
+
+    <div class="lobby-card" onclick="openPanel('market')">
+      <div class="icon">🛒</div>
+      <h3>Cloaks Market</h3>
+      <p>Buy and trade cloaks</p>
+    </div>
+
+    <div class="lobby-card" onclick="openPanel('stats')">
+      <div class="icon">📊</div>
+      <h3>Stats</h3>
+      <p>View your full stats</p>
+    </div>
+
+    <div class="lobby-card" onclick="openPanel('inventory')">
+      <div class="icon">🎒</div>
+      <h3>Inventory</h3>
+      <p>Your cloaks & items</p>
+    </div>
+
+    <div class="lobby-card" onclick="openPanel('leaderboard')">
+      <div class="icon">🏆</div>
+      <h3>Leaderboard</h3>
+      <p>Top players</p>
+    </div>
+
+    <div class="lobby-card" onclick="openPanel('settings')">
+      <div class="icon">⚙️</div>
+      <h3>Settings</h3>
+      <p>Account & preferences</p>
+    </div>
+  </div>
+</div>
+
+<!-- ========== PANELS ========== -->
+<div class="panel" id="panel-market">
+  <h2>Cloaks Market <button class="back-btn" onclick="closePanel()">← Back</button></h2>
+  <div class="blank-area">
+    Market is empty for now.<br>
+    (Clickable placeholder – coming soon)
+  </div>
+</div>
+
+<div class="panel" id="panel-stats">
+  <h2>Your Stats <button class="back-btn" onclick="closePanel()">← Back</button></h2>
+  <div class="blank-area">
+    Detailed stats will appear here.<br>
+    Games Played: <span id="detailGames">0</span><br>
+    High Score: <span id="detailHigh">0</span><br>
+    Total Cloaks: <span id="detailCloaks">0</span>
+  </div>
+</div>
+
+<div class="panel" id="panel-inventory">
+  <h2>Inventory <button class="back-btn" onclick="closePanel()">← Back</button></h2>
+  <div class="blank-area">
+    Your inventory is empty.<br>
+    (Clickable placeholder)
+  </div>
+</div>
+
+<div class="panel" id="panel-leaderboard">
+  <h2>Leaderboard <button class="back-btn" onclick="closePanel()">← Back</button></h2>
+  <div class="blank-area">
+    No rankings yet.<br>
+    (Clickable placeholder)
+  </div>
+</div>
+
+<div class="panel" id="panel-settings">
+  <h2>Settings <button class="back-btn" onclick="closePanel()">← Back</button></h2>
+  <div class="blank-area">
+    Settings coming soon.<br>
+    (Clickable placeholder)
+  </div>
+</div>
+
+<!-- ========== GAME SECTION ========== -->
+<div class="game-section" id="gameSection">
+  <div class="card" id="home">
+    <h2>Start a Race</h2>
+    <label>Your Name</label>
+    <input type="text" id="playerName" placeholder="Enter your name" value="Student">
+    
+    <label>Choose Question Set</label>
+    <select id="setSelect">
+      <option value="math">Math Basics</option>
+      <option value="science">Science Facts</option>
+      <option value="history">US History</option>
+      <option value="custom">Custom (edit below)</option>
+    </select>
+
+    <div id="customBox" class="hidden">
+      <label>Custom Questions (one per line: Question|Correct|Wrong1|Wrong2|Wrong3)</label>
+      <textarea id="customQuestions" rows="5" placeholder="What is 2+2?|4|3|5|6"></textarea>
+    </div>
+
+    <button onclick="startGame()">Start Race!</button>
+    <button onclick="backToLobby()" style="background:#6d28d9; margin-top:8px;">← Back to Lobby</button>
+  </div>
+
+  <div class="card hidden" id="game">
+    <div class="scoreboard">
+      <span id="playerDisplay">Player</span>
+      <span>Score: <span id="score">0</span></span>
+    </div>
+    <div class="progress"><div class="progress-bar" id="progressBar"></div></div>
+    <div class="question-box" id="questionText">Question</div>
+    <div class="answers" id="answers"></div>
+  </div>
+
+  <div class="card hidden" id="results">
+    <h2>Race Finished!</h2>
+    <div class="final-score" id="finalScore">0</div>
+    <p style="text-align:center; margin-bottom:20px;" id="resultMessage">Great job!</p>
+    <button onclick="resetGame()">Play Again</button>
+    <button onclick="backToLobby()" style="background:#6d28d9; margin-top:8px;">← Back to Lobby</button>
+  </div>
+</div>
+
+<script>
+  // ========== AUTH ==========
+  function safeGet(key, fallback) {
+    try {
+      return localStorage.getItem(key) || fallback;
+    } catch (e) {
+      console.warn('localStorage read failed', e);
+      return fallback;
+    }
+  }
+
+  function safeSet(key, value) {
+    try {
+      localStorage.setItem(key, value);
+      return true;
+    } catch (e) {
+      console.warn('localStorage write failed', e);
+      alert('Warning: Could not save data. Try opening the file through a local server or different browser.');
+      return false;
+    }
+  }
+
+  function openModal(type) {
+    closeModals();
+    document.getElementById(type + 'Modal').classList.add('active');
+    document.getElementById('loginError').textContent = '';
+    document.getElementById('regError').textContent = '';
+  }
+
+  function closeModals() {
+    document.getElementById('loginModal').classList.remove('active');
+    document.getElementById('registerModal').classList.remove('active');
+  }
+
+  function switchModal(type) {
+    closeModals();
+    openModal(type);
+  }
+
+  function doRegister() {
+    const user = document.getElementById('regUser').value.trim();
+    const pass = document.getElementById('regPass').value;
+    const pass2 = document.getElementById('regPass2').value;
+    const err = document.getElementById('regError');
+
+    err.textContent = '';
+
+    if (!user || !pass) {
+      err.textContent = 'Please fill in all fields';
+      return;
+    }
+    if (pass !== pass2) {
+      err.textContent = 'Passwords do not match';
+      return;
+    }
+    if (pass.length < 3) {
+      err.textContent = 'Password must be at least 3 characters';
+      return;
+    }
+
+    let users = {};
+    try {
+      users = JSON.parse(safeGet('cloaket_users', '{}'));
+    } catch (e) {
+      users = {};
+    }
+
+    if (users[user]) {
+      err.textContent = 'Username already taken';
+      return;
+    }
+
+    users[user] = pass;
+    if (!safeSet('cloaket_users', JSON.stringify(users))) {
+      err.textContent = 'Could not save account. Try a different browser.';
+      return;
+    }
+
+    safeSet('cloaket_lastUser', user);
+
+    closeModals();
+    document.getElementById('loginUser').value = user;
+    document.getElementById('loginPass').value = '';
+    openModal('login');
+    document.getElementById('loginError').textContent = 'Account created! Please login.';
+    document.getElementById('loginError').style.color = '#16a34a';
+  }
+
+  function doLogin() {
+    const user = document.getElementById('loginUser').value.trim();
+    const pass = document.getElementById('loginPass').value;
+    const err = document.getElementById('loginError');
+
+    err.textContent = '';
+    err.style.color = '#dc2626';
+
+    if (!user || !pass) {
+      err.textContent = 'Please enter username and password';
+      return;
+    }
+
+    let users = {};
+    try {
+      users = JSON.parse(safeGet('cloaket_users', '{}'));
+    } catch (e) {
+      users = {};
+    }
+
+    if (!users[user] || users[user] !== pass) {
+      err.textContent = 'Invalid username or password';
+      return;
+    }
+
+    safeSet('cloaket_current', user);
+    safeSet('cloaket_lastUser', user);
+
+    afterLogin(user);
+  }
+
+  function afterLogin(username) {
+    closeModals();
+    document.getElementById('landing').style.display = 'none';
+    document.getElementById('lobby').classList.add('active');
+    document.getElementById('userBar').classList.add('active');
+    document.getElementById('loggedInName').textContent = username;
+    document.getElementById('lobbyName').textContent = username;
+    document.getElementById('playerName').value = username;
+
+    loadStats(username);
+  }
+
+  function logout() {
+    try { localStorage.removeItem('cloaket_current'); } catch(e) {}
+    location.reload();
+  }
+
+  window.addEventListener('DOMContentLoaded', () => {
+    try {
+      const current = localStorage.getItem('cloaket_current');
+      const lastUser = localStorage.getItem('cloaket_lastUser');
+
+      if (lastUser) {
+        document.getElementById('loginUser').value = lastUser;
+      }
+
+      if (current) {
+        afterLogin(current);
+      }
+    } catch (e) {
+      console.warn('Could not restore session', e);
+    }
+  });
+
+  // ========== LOBBY ==========
+  function openPanel(name) {
+    if (name === 'play') {
+      document.getElementById('lobby').classList.remove('active');
+      document.getElementById('gameSection').classList.add('active');
+      document.getElementById('home').classList.remove('hidden');
+      document.getElementById('game').classList.add('hidden');
+      document.getElementById('results').classList.add('hidden');
+      return;
+    }
+
+    document.getElementById('lobby').classList.remove('active');
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    const panel = document.getElementById('panel-' + name);
+    if (panel) panel.classList.add('active');
+  }
+
+  function closePanel() {
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    document.getElementById('lobby').classList.add('active');
+  }
+
+  function backToLobby() {
+    document.getElementById('gameSection').classList.remove('active');
+    document.getElementById('lobby').classList.add('active');
+  }
+
+  // ========== STATS ==========
+  function loadStats(username) {
+    const key = 'cloaket_stats_' + username;
+    const stats = JSON.parse(localStorage.getItem(key) || '{"games":0,"high":0,"cloaks":0}');
+    document.getElementById('statGames').textContent = stats.games;
+    document.getElementById('statHigh').textContent = stats.high;
+    document.getElementById('statCloaks').textContent = stats.cloaks;
+    document.getElementById('detailGames').textContent = stats.games;
+    document.getElementById('detailHigh').textContent = stats.high;
+    document.getElementById('detailCloaks').textContent = stats.cloaks;
+  }
+
+  function saveStats(username, score) {
+    const key = 'cloaket_stats_' + username;
+    const stats = JSON.parse(localStorage.getItem(key) || '{"games":0,"high":0,"cloaks":0}');
+    stats.games += 1;
+    if (score > stats.high) stats.high = score;
+    stats.cloaks += Math.floor(score / 100);
+    localStorage.setItem(key, JSON.stringify(stats));
+    loadStats(username);
+  }
+
+  // ========== GAME LOGIC ==========
+  const sets = {
+    math: [
+      {q: "What is 7 × 8?", a: "56", wrong: ["54","64","48"]},
+      {q: "What is 15% of 200?", a: "30", wrong: ["25","35","40"]},
+      {q: "Solve: 12 + 9 × 3", a: "39", wrong: ["63","36","45"]},
+      {q: "What is the square root of 81?", a: "9", wrong: ["8","7","11"]},
+      {q: "How many degrees in a right angle?", a: "90", wrong: ["45","180","360"]},
+      {q: "What is 3/4 as a decimal?", a: "0.75", wrong: ["0.25","0.5","0.8"]},
+      {q: "Area of a rectangle 5×8?", a: "40", wrong: ["13","26","45"]},
+      {q: "What is 2³?", a: "8", wrong: ["6","4","9"]}
+    ],
+    science: [
+      {q: "What planet is known as the Red Planet?", a: "Mars", wrong: ["Venus","Jupiter","Saturn"]},
+      {q: "What gas do plants absorb?", a: "Carbon dioxide", wrong: ["Oxygen","Nitrogen","Helium"]},
+      {q: "How many bones in an adult human body?", a: "206", wrong: ["198","210","180"]},
+      {q: "What is H₂O?", a: "Water", wrong: ["Hydrogen","Salt","Oxygen"]},
+      {q: "What force keeps us on Earth?", a: "Gravity", wrong: ["Magnetism","Friction","Inertia"]},
+      {q: "Largest organ in the human body?", a: "Skin", wrong: ["Liver","Heart","Brain"]},
+      {q: "What is the chemical symbol for gold?", a: "Au", wrong: ["Ag","Fe","Go"]},
+      {q: "Speed of light (approx)?", a: "300,000 km/s", wrong: ["150,000 km/s","30,000 km/s","3,000 km/s"]}
+    ],
+    history: [
+      {q: "Who was the first U.S. President?", a: "George Washington", wrong: ["Thomas Jefferson","Abraham Lincoln","John Adams"]},
+      {q: "In what year did the Titanic sink?", a: "1912", wrong: ["1905","1918","1923"]},
+      {q: "Who wrote the Declaration of Independence?", a: "Thomas Jefferson", wrong: ["Benjamin Franklin","John Hancock","James Madison"]},
+      {q: "What year did WWII end?", a: "1945", wrong: ["1944","1946","1939"]},
+      {q: "Capital of the United States?", a: "Washington D.C.", wrong: ["New York","Philadelphia","Boston"]},
+      {q: "Who discovered America in 1492?", a: "Christopher Columbus", wrong: ["Amerigo Vespucci","Leif Erikson","Ferdinand Magellan"]},
+      {q: "What wall fell in 1989?", a: "Berlin Wall", wrong: ["Great Wall","Hadrian's Wall","Wall Street"]},
+      {q: "First man on the moon?", a: "Neil Armstrong", wrong: ["Buzz Aldrin","Yuri Gagarin","John Glenn"]}
+    ]
+  };
+
+  let questions = [];
+  let current = 0;
+  let score = 0;
+
+  document.getElementById('setSelect').addEventListener('change', function() {
+    document.getElementById('customBox').classList.toggle('hidden', this.value !== 'custom');
+  });
+
+  function startGame() {
+    const playerName = document.getElementById('playerName').value.trim() || "Student";
+    const set = document.getElementById('setSelect').value;
+
+    if (set === 'custom') {
+      const text = document.getElementById('customQuestions').value.trim();
+      if (!text) {
+        alert("Please add some custom questions!");
+        return;
+      }
+      questions = text.split('\n').filter(l => l.trim()).map(line => {
+        const parts = line.split('|').map(p => p.trim());
+        return { q: parts[0], a: parts[1], wrong: parts.slice(2) };
+      });
+    } else {
+      questions = [...sets[set]].sort(() => Math.random() - 0.5);
+    }
+
+    current = 0;
+    score = 0;
+    document.getElementById('home').classList.add('hidden');
+    document.getElementById('game').classList.remove('hidden');
+    document.getElementById('results').classList.add('hidden');
+    document.getElementById('playerDisplay').textContent = playerName;
+    showQuestion();
+  }
+
+  function showQuestion() {
+    if (current >= questions.length) {
+      endGame();
+      return;
+    }
+
+    const q = questions[current];
+    document.getElementById('questionText').textContent = q.q;
+    document.getElementById('score').textContent = score;
+    document.getElementById('progressBar').style.width = ((current / questions.length) * 100) + '%';
+
+    const answers = [q.a, ...q.wrong].sort(() => Math.random() - 0.5);
+    const container = document.getElementById('answers');
+    container.innerHTML = '';
+
+    answers.forEach(ans => {
+      const btn = document.createElement('button');
+      btn.className = 'answer-btn';
+      btn.textContent = ans;
+      btn.onclick = () => selectAnswer(btn, ans === q.a);
+      container.appendChild(btn);
+    });
+  }
+
+  function selectAnswer(btn, correct) {
+    const buttons = document.querySelectorAll('.answer-btn');
+    buttons.forEach(b => b.disabled = true);
+
+    if (correct) {
+      btn.classList.add('correct');
+      score += 100 + Math.floor(Math.random() * 50);
+    } else {
+      btn.classList.add('wrong');
+      buttons.forEach(b => {
+        if (b.textContent === questions[current].a) b.classList.add('correct');
+      });
+    }
+
+    setTimeout(() => {
+      current++;
+      showQuestion();
+    }, 900);
+  }
+
+  function endGame() {
+    document.getElementById('game').classList.add('hidden');
+    document.getElementById('results').classList.remove('hidden');
+    document.getElementById('finalScore').textContent = score;
+    
+    let msg = "Nice try!";
+    if (score > 600) msg = "Amazing run!";
+    if (score > 900) msg = "Cloaket Champion!";
+    document.getElementById('resultMessage').textContent = msg;
+
+    const user = localStorage.getItem('cloaket_current');
+    if (user) saveStats(user, score);
+  }
+
+  function resetGame() {
+    document.getElementById('results').classList.add('hidden');
+    document.getElementById('home').classList.remove('hidden');
+  }
+</script>
+</body>
+</html>
