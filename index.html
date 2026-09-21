@@ -8,11 +8,9 @@
   :root {
     --purple: #8b5cf6;
     --purple-dark: #6d28d9;
-    --purple-light: #c4b5fd;
-    --bg-left: #7c3aed;
-    --bg-right: #e9d5ff;
-    --card: #f5f3ff;
-    --text: #1e1b4b;
+    --bg: #0f0a1a;
+    --card: #1a1025;
+    --text: #e9d5ff;
     --white: #ffffff;
   }
 
@@ -22,6 +20,7 @@
     font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
     min-height: 100vh;
     color: var(--text);
+    background: #0f0a1a;
     overflow-x: hidden;
   }
 
@@ -30,86 +29,60 @@
     display: flex;
     min-height: 100vh;
     position: relative;
+    background: linear-gradient(160deg, #0f0a1a 0%, #1a1025 40%, #2e1065 100%);
   }
 
-  .landing-left {
+  .landing-content {
     flex: 1;
-    background: linear-gradient(160deg, #7c3aed 0%, #6d28d9 50%, #5b21b6 100%);
-    color: white;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: 60px 50px;
-    position: relative;
+    align-items: center;
+    text-align: center;
+    padding: 40px 20px;
     z-index: 2;
   }
 
-  .landing-right {
-    flex: 1;
-    background: linear-gradient(160deg, #e9d5ff 0%, #ddd6fe 100%);
-    position: relative;
-    overflow: hidden;
-  }
-
-  /* Bubbles on right */
-  .bubble {
-    position: absolute;
-    border-radius: 50%;
-    background: rgba(167, 139, 250, 0.25);
-    animation: float 8s ease-in-out infinite;
-  }
-  .bubble:nth-child(1) { width: 180px; height: 180px; top: 10%; right: 15%; animation-delay: 0s; }
-  .bubble:nth-child(2) { width: 120px; height: 120px; top: 40%; right: 40%; animation-delay: 1.5s; }
-  .bubble:nth-child(3) { width: 90px; height: 90px; top: 65%; right: 20%; animation-delay: 3s; }
-  .bubble:nth-child(4) { width: 140px; height: 140px; top: 20%; right: 55%; animation-delay: 2s; }
-  .bubble:nth-child(5) { width: 70px; height: 70px; top: 75%; right: 50%; animation-delay: 4s; }
-  .bubble:nth-child(6) { width: 100px; height: 100px; top: 50%; right: 10%; animation-delay: 1s; }
-
-  @keyframes float {
-    0%, 100% { transform: translateY(0) scale(1); }
-    50% { transform: translateY(-25px) scale(1.05); }
-  }
-
   .logo {
-    font-size: clamp(3.2rem, 6vw, 5rem);
+    font-size: clamp(3.5rem, 8vw, 5.5rem);
     font-weight: 900;
     line-height: 0.95;
     letter-spacing: -2px;
     color: #ffffff;
-    text-shadow: 4px 4px 0 #4c1d95, 8px 8px 0 rgba(0,0,0,0.2);
+    text-shadow: 4px 4px 0 #4c1d95;
     margin-bottom: 20px;
   }
   .logo span { display: block; }
 
   .tagline {
     font-size: 1.15rem;
-    opacity: 0.9;
+    opacity: 0.85;
     margin-bottom: 8px;
-    max-width: 340px;
+    color: #c4b5fd;
   }
   .beta {
     font-size: 0.95rem;
-    opacity: 0.7;
+    opacity: 0.6;
     margin-bottom: 40px;
+    color: #a78bfa;
   }
 
   .get-started-btn {
     display: inline-block;
-    padding: 14px 36px;
-    border: 2px solid white;
+    padding: 14px 40px;
+    border: 2px solid #8b5cf6;
     border-radius: 999px;
     background: transparent;
     color: white;
-    font-size: 1.1rem;
+    font-size: 1.15rem;
     font-weight: 700;
     cursor: pointer;
-    transition: all 0.25s;
+    transition: all 0.2s;
     font-family: inherit;
   }
   .get-started-btn:hover {
-    background: white;
-    color: #6d28d9;
-    transform: translateY(-2px);
+    background: #8b5cf6;
+    color: white;
   }
 
   /* Top right Login/Register */
@@ -132,20 +105,21 @@
     transition: all 0.2s;
   }
   .top-auth .login-btn {
-    background: white;
-    color: #6d28d9;
+    background: transparent;
+    color: white;
+    border: 1px solid rgba(255,255,255,0.4);
   }
   .top-auth .register-btn {
     background: #7c3aed;
     color: white;
   }
-  .top-auth button:hover { transform: translateY(-2px); box-shadow: 0 6px 15px rgba(0,0,0,0.15); }
+  .top-auth button:hover { opacity: 0.9; }
 
   /* ========== MODALS ========== */
   .modal-overlay {
     position: fixed;
     inset: 0;
-    background: rgba(10, 5, 30, 0.75);
+    background: rgba(0, 0, 0, 0.8);
     display: none;
     align-items: center;
     justify-content: center;
@@ -155,19 +129,15 @@
   .modal-overlay.active { display: flex; }
 
   .modal {
-    background: #f5f3ff;
-    border-radius: 24px;
+    background: #1a1025;
+    border: 1px solid #4c1d95;
+    border-radius: 20px;
     padding: 32px 28px;
     width: 100%;
     max-width: 380px;
     position: relative;
-    color: #1e1b4b;
-    box-shadow: 0 25px 60px rgba(0,0,0,0.4);
-    animation: popIn 0.25s ease;
-  }
-  @keyframes popIn {
-    from { transform: scale(0.9); opacity: 0; }
-    to { transform: scale(1); opacity: 1; }
+    color: #e9d5ff;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
   }
 
   .modal-header {
@@ -177,10 +147,10 @@
     margin-bottom: 22px;
   }
   .modal-title {
-    background: #ddd6fe;
-    color: #5b21b6;
+    background: #2e1065;
+    color: #c4b5fd;
     font-weight: 800;
-    font-size: 1.35rem;
+    font-size: 1.3rem;
     padding: 8px 20px;
     border-radius: 999px;
   }
@@ -188,114 +158,107 @@
     background: none;
     border: none;
     font-size: 1.6rem;
-    color: #7c3aed;
+    color: #a78bfa;
     cursor: pointer;
   }
   .modal input {
     width: 100%;
     padding: 14px 16px;
     margin-bottom: 14px;
-    border: none;
+    border: 1px solid #4c1d95;
     border-radius: 12px;
-    background: #ede9fe;
+    background: #0f0a1a;
     font-size: 1rem;
     font-family: inherit;
-    color: #1e1b4b;
+    color: #e9d5ff;
   }
   .modal input:focus { outline: 2px solid #8b5cf6; }
+  .modal input::placeholder { color: #6b7280; }
+
   .modal-btn {
     width: 100%;
     padding: 15px;
-    background: linear-gradient(90deg, #7c3aed, #a855f7, #ec4899, #f59e0b, #22c55e, #3b82f6, #7c3aed);
-    background-size: 300% 100%;
-    animation: rainbow 4s linear infinite;
+    background: #7c3aed;
     color: white;
     border: none;
-    border-radius: 14px;
-    font-size: 1.15rem;
+    border-radius: 12px;
+    font-size: 1.1rem;
     font-weight: 700;
     cursor: pointer;
   }
-  @keyframes rainbow {
-    0% { background-position: 0% 50%; }
-    100% { background-position: 300% 50%; }
-  }
+  .modal-btn:hover { background: #6d28d9; }
+
   .switch-text {
     text-align: center;
     margin-top: 18px;
     font-size: 0.95rem;
-    color: #6b21a8;
+    color: #a78bfa;
   }
   .switch-text a {
-    color: #7c3aed;
+    color: #c4b5fd;
     font-weight: 700;
     cursor: pointer;
   }
   .error-msg {
-    color: #dc2626;
+    color: #f87171;
     font-size: 0.9rem;
     margin-bottom: 10px;
     text-align: center;
     min-height: 20px;
   }
 
-  /* ========== APP LAYOUT (after login) ========== */
+  /* ========== APP LAYOUT ========== */
   #app {
     display: none;
     min-height: 100vh;
-    background: linear-gradient(160deg, #1e1b4b 0%, #312e81 40%, #4c1d95 100%);
+    background: #0f0a1a;
   }
   #app.active { display: flex; }
 
   /* LEFT NAVBAR */
   .sidebar {
-    width: 240px;
-    background: linear-gradient(180deg, #2e1065 0%, #1e1b4b 100%);
+    width: 230px;
+    background: #1a1025;
     color: white;
     display: flex;
     flex-direction: column;
-    padding: 24px 16px;
-    border-right: 1px solid rgba(255,255,255,0.08);
-    position: relative;
-    z-index: 5;
+    padding: 24px 14px;
+    border-right: 1px solid #2e1065;
   }
 
   .sidebar-logo {
-    font-size: 1.8rem;
+    font-size: 1.7rem;
     font-weight: 900;
     text-align: center;
-    margin-bottom: 8px;
-    background: linear-gradient(90deg, #c4b5fd, #f9a8d4, #fde68a, #86efac, #93c5fd, #c4b5fd);
-    background-size: 300% 100%;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    animation: rainbow 5s linear infinite;
+    margin-bottom: 6px;
+    color: #c4b5fd;
   }
 
   .sidebar-user {
     text-align: center;
     font-size: 0.9rem;
-    opacity: 0.8;
-    margin-bottom: 30px;
+    opacity: 0.7;
+    margin-bottom: 28px;
+    color: #a78bfa;
   }
 
   .nav-item {
     display: flex;
     align-items: center;
     gap: 12px;
-    padding: 14px 16px;
-    border-radius: 12px;
+    padding: 13px 16px;
+    border-radius: 10px;
     cursor: pointer;
-    margin-bottom: 6px;
+    margin-bottom: 4px;
     font-weight: 600;
-    transition: all 0.2s;
-    color: rgba(255,255,255,0.85);
+    transition: background 0.15s;
+    color: rgba(255,255,255,0.8);
   }
   .nav-item:hover, .nav-item.active {
-    background: rgba(139, 92, 246, 0.35);
+    background: #2e1065;
     color: white;
   }
-  .nav-item .icon { font-size: 1.3rem; }
+  .nav-item .icon { font-size: 1.2rem; }
 
   .sidebar-bottom {
     margin-top: auto;
@@ -304,109 +267,85 @@
   .logout-btn {
     width: 100%;
     padding: 12px;
-    background: rgba(255,255,255,0.1);
-    border: 1px solid rgba(255,255,255,0.2);
-    color: white;
-    border-radius: 12px;
+    background: transparent;
+    border: 1px solid #4c1d95;
+    color: #c4b5fd;
+    border-radius: 10px;
     font-weight: 600;
     cursor: pointer;
     font-family: inherit;
   }
-  .logout-btn:hover { background: rgba(255,255,255,0.18); }
+  .logout-btn:hover { background: #2e1065; }
 
   /* MAIN CONTENT */
   .main-content {
     flex: 1;
-    padding: 30px 40px;
+    padding: 32px 40px;
     overflow-y: auto;
-    position: relative;
   }
 
   .page-title {
-    font-size: 2rem;
+    font-size: 1.8rem;
     font-weight: 800;
     color: white;
-    margin-bottom: 8px;
-    text-shadow: 2px 2px 0 #4c1d95;
+    margin-bottom: 6px;
   }
   .page-subtitle {
-    color: rgba(255,255,255,0.7);
+    color: #a78bfa;
     margin-bottom: 28px;
+    font-size: 0.95rem;
   }
 
   /* Stats bar */
   .stats-bar {
     display: flex;
-    gap: 16px;
+    gap: 14px;
     margin-bottom: 28px;
     flex-wrap: wrap;
   }
   .stat-card {
-    background: rgba(255,255,255,0.1);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255,255,255,0.15);
-    border-radius: 16px;
+    background: #1a1025;
+    border: 1px solid #2e1065;
+    border-radius: 14px;
     padding: 18px 24px;
-    min-width: 140px;
+    min-width: 130px;
     text-align: center;
     color: white;
-    transition: transform 0.2s;
   }
-  .stat-card:hover { transform: translateY(-4px); }
   .stat-value {
-    font-size: 1.8rem;
+    font-size: 1.7rem;
     font-weight: 800;
-    background: linear-gradient(90deg, #c4b5fd, #f9a8d4, #fde68a);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: #c4b5fd;
   }
-  .stat-label { font-size: 0.85rem; opacity: 0.75; margin-top: 4px; }
+  .stat-label { font-size: 0.85rem; opacity: 0.7; margin-top: 4px; color: #a78bfa; }
 
   /* Grid cards */
   .card-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 18px;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 16px;
   }
 
   .blook-card {
-    background: linear-gradient(145deg, #f5f3ff, #ede9fe);
-    border-radius: 18px;
-    padding: 24px;
+    background: #1a1025;
+    border: 1px solid #2e1065;
+    border-radius: 16px;
+    padding: 22px;
     cursor: pointer;
-    transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
-    border: 2px solid transparent;
-    position: relative;
-    overflow: hidden;
+    transition: border-color 0.15s;
   }
-  .blook-card::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, transparent 40%, rgba(255,255,255,0.4) 50%, transparent 60%);
-    transform: translateX(-100%);
-    transition: transform 0.6s;
-  }
-  .blook-card:hover::before { transform: translateX(100%); }
   .blook-card:hover {
-    transform: translateY(-8px) scale(1.02);
-    border-color: #a78bfa;
-    box-shadow: 0 15px 35px rgba(124, 58, 237, 0.3);
+    border-color: #7c3aed;
   }
   .blook-card .icon {
-    font-size: 2.4rem;
-    margin-bottom: 12px;
+    font-size: 2rem;
+    margin-bottom: 10px;
     display: block;
-    animation: bounce 2.5s ease-in-out infinite;
-  }
-  @keyframes bounce {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-6px); }
   }
   .blook-card h3 {
-    font-size: 1.2rem;
-    color: #5b21b6;
-    margin-bottom: 6px;
+    font-size: 1.15rem;
+    color: #c4b5fd;
+    margin-bottom: 5px;
   }
   .blook-card p {
     font-size: 0.9rem;
@@ -416,73 +355,55 @@
   /* Panel view */
   .panel-view {
     display: none;
-    background: linear-gradient(145deg, #f5f3ff, #ede9fe);
-    border-radius: 20px;
-    padding: 32px;
-    max-width: 700px;
-    animation: slideIn 0.3s ease;
+    background: #1a1025;
+    border: 1px solid #2e1065;
+    border-radius: 16px;
+    padding: 28px;
+    max-width: 650px;
   }
   .panel-view.active { display: block; }
-  @keyframes slideIn {
-    from { opacity: 0; transform: translateY(15px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
+
   .panel-view h2 {
-    color: #5b21b6;
-    margin-bottom: 20px;
+    color: #c4b5fd;
+    margin-bottom: 18px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    font-size: 1.4rem;
   }
   .back-btn {
-    background: #ddd6fe;
+    background: #2e1065;
     border: none;
-    color: #5b21b6;
-    padding: 8px 16px;
+    color: #c4b5fd;
+    padding: 7px 14px;
     border-radius: 999px;
     font-weight: 700;
     cursor: pointer;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
   }
-  .back-btn:hover { background: #c4b5fd; }
+  .back-btn:hover { background: #4c1d95; }
 
   .blank-area {
-    background: #ede9fe;
-    border: 2px dashed #c4b5fd;
-    border-radius: 16px;
-    padding: 50px 20px;
+    background: #0f0a1a;
+    border: 1px dashed #4c1d95;
+    border-radius: 12px;
+    padding: 40px 20px;
     text-align: center;
-    color: #7c3aed;
+    color: #a78bfa;
     font-weight: 600;
-  }
-
-  /* Rainbow accent bar */
-  .rainbow-bar {
-    height: 4px;
-    background: linear-gradient(90deg, #ef4444, #f59e0b, #22c55e, #3b82f6, #8b5cf6, #ec4899, #ef4444);
-    background-size: 300% 100%;
-    animation: rainbow 3s linear infinite;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 100;
   }
 
   .hidden { display: none !important; }
 
   @media (max-width: 768px) {
-    #landing { flex-direction: column; }
-    .landing-right { min-height: 200px; }
     .sidebar { width: 70px; }
-    .nav-item span { display: none; }
-    .sidebar-logo { font-size: 1.2rem; }
+    .nav-item span:not(.icon) { display: none; }
+    .sidebar-logo { font-size: 1.1rem; }
+    .main-content { padding: 20px; }
   }
 </style>
 </head>
 <body>
-
-<div class="rainbow-bar"></div>
 
 <!-- ========== LANDING ========== -->
 <div id="landing">
@@ -491,7 +412,7 @@
     <button class="register-btn" onclick="openModal('register')">Register</button>
   </div>
 
-  <div class="landing-left">
+  <div class="landing-content">
     <div class="logo">
       <span>Cloaket</span>
       <span>Blooket.</span>
@@ -501,15 +422,6 @@
     <div class="tagline">The first cloak-themed Blooket private server</div>
     <div class="beta">Currently in Beta</div>
     <button class="get-started-btn" onclick="openModal('register')">Get Started</button>
-  </div>
-
-  <div class="landing-right">
-    <div class="bubble"></div>
-    <div class="bubble"></div>
-    <div class="bubble"></div>
-    <div class="bubble"></div>
-    <div class="bubble"></div>
-    <div class="bubble"></div>
   </div>
 </div>
 
@@ -554,14 +466,11 @@
     <div class="sidebar-logo">Cloaket</div>
     <div class="sidebar-user" id="sidebarUser">Player</div>
 
-    <div class="nav-item active" onclick="showPage('home')" data-page="home">
-      <span class="icon">🏠</span> <span>Home</span>
+    <div class="nav-item active" onclick="showPage('stats')" data-page="stats">
+      <span class="icon">📊</span> <span>Stats</span>
     </div>
     <div class="nav-item" onclick="showPage('market')" data-page="market">
       <span class="icon">🛒</span> <span>Market</span>
-    </div>
-    <div class="nav-item" onclick="showPage('stats')" data-page="stats">
-      <span class="icon">📊</span> <span>Stats</span>
     </div>
     <div class="nav-item" onclick="showPage('inventory')" data-page="inventory">
       <span class="icon">🎒</span> <span>Inventory</span>
@@ -580,99 +489,57 @@
 
   <!-- MAIN CONTENT -->
   <div class="main-content">
-    <!-- HOME -->
-    <div id="page-home">
-      <div class="page-title">Welcome back, <span id="homeName">Player</span>!</div>
-      <div class="page-subtitle">What do you want to do today?</div>
-
+    <!-- STATS (default page) -->
+    <div id="page-stats" class="panel-view active">
+      <h2>Your Stats</h2>
       <div class="stats-bar">
-        <div class="stat-card">
-          <div class="stat-value" id="statGames">0</div>
-          <div class="stat-label">Games Played</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-value" id="statHigh">0</div>
-          <div class="stat-label">High Score</div>
-        </div>
         <div class="stat-card">
           <div class="stat-value" id="statCloaks">0</div>
           <div class="stat-label">Cloaks</div>
         </div>
+        <div class="stat-card">
+          <div class="stat-value" id="statItems">0</div>
+          <div class="stat-label">Items</div>
+        </div>
       </div>
-
-      <div class="card-grid">
-        <div class="blook-card" onclick="showPage('market')">
-          <span class="icon">🛒</span>
-          <h3>Cloaks Market</h3>
-          <p>Buy and trade exclusive cloaks</p>
-        </div>
-        <div class="blook-card" onclick="showPage('stats')">
-          <span class="icon">📊</span>
-          <h3>Your Stats</h3>
-          <p>See how you're doing</p>
-        </div>
-        <div class="blook-card" onclick="showPage('inventory')">
-          <span class="icon">🎒</span>
-          <h3>Inventory</h3>
-          <p>View your collection</p>
-        </div>
-        <div class="blook-card" onclick="showPage('leaderboard')">
-          <span class="icon">🏆</span>
-          <h3>Leaderboard</h3>
-          <p>Top players this week</p>
-        </div>
-        <div class="blook-card" onclick="showPage('settings')">
-          <span class="icon">⚙️</span>
-          <h3>Settings</h3>
-          <p>Account & preferences</p>
-        </div>
+      <div class="blank-area">
+        More detailed stats coming soon.
       </div>
     </div>
 
     <!-- MARKET -->
     <div id="page-market" class="panel-view">
-      <h2>Cloaks Market <button class="back-btn" onclick="showPage('home')">← Back</button></h2>
+      <h2>Cloaks Market</h2>
       <div class="blank-area">
-        🛒 Market is currently empty<br>
-        <small style="opacity:0.7">New cloaks coming soon...</small>
-      </div>
-    </div>
-
-    <!-- STATS -->
-    <div id="page-stats" class="panel-view">
-      <h2>Your Stats <button class="back-btn" onclick="showPage('home')">← Back</button></h2>
-      <div class="blank-area">
-        📊 Detailed stats<br><br>
-        Games Played: <strong id="detailGames">0</strong><br>
-        High Score: <strong id="detailHigh">0</strong><br>
-        Total Cloaks: <strong id="detailCloaks">0</strong>
+        Market is currently empty.<br>
+        <small style="opacity:0.6">New cloaks coming soon...</small>
       </div>
     </div>
 
     <!-- INVENTORY -->
     <div id="page-inventory" class="panel-view">
-      <h2>Inventory <button class="back-btn" onclick="showPage('home')">← Back</button></h2>
+      <h2>Inventory</h2>
       <div class="blank-area">
-        🎒 Your inventory is empty<br>
-        <small style="opacity:0.7">Win games to collect cloaks!</small>
+        Your inventory is empty.<br>
+        <small style="opacity:0.6">Collect cloaks and items here.</small>
       </div>
     </div>
 
     <!-- LEADERBOARD -->
     <div id="page-leaderboard" class="panel-view">
-      <h2>Leaderboard <button class="back-btn" onclick="showPage('home')">← Back</button></h2>
+      <h2>Leaderboard</h2>
       <div class="blank-area">
-        🏆 No rankings yet<br>
-        <small style="opacity:0.7">Be the first to climb the ranks!</small>
+        No rankings yet.<br>
+        <small style="opacity:0.6">Check back later!</small>
       </div>
     </div>
 
     <!-- SETTINGS -->
     <div id="page-settings" class="panel-view">
-      <h2>Settings <button class="back-btn" onclick="showPage('home')">← Back</button></h2>
+      <h2>Settings</h2>
       <div class="blank-area">
-        ⚙️ Settings coming soon<br>
-        <small style="opacity:0.7">Account options will appear here</small>
+        Settings coming soon.<br>
+        <small style="opacity:0.6">Account options will appear here.</small>
       </div>
     </div>
   </div>
@@ -730,7 +597,7 @@
     document.getElementById('loginPass').value = '';
     openModal('login');
     document.getElementById('loginError').textContent = 'Account created! Please login.';
-    document.getElementById('loginError').style.color = '#16a34a';
+    document.getElementById('loginError').style.color = '#4ade80';
   }
 
   function doLogin() {
@@ -738,7 +605,7 @@
     const pass = document.getElementById('loginPass').value;
     const err = document.getElementById('loginError');
     err.textContent = '';
-    err.style.color = '#dc2626';
+    err.style.color = '#f87171';
 
     if (!user || !pass) { err.textContent = 'Please enter username and password'; return; }
 
@@ -758,9 +625,8 @@
     document.getElementById('landing').style.display = 'none';
     document.getElementById('app').classList.add('active');
     document.getElementById('sidebarUser').textContent = username;
-    document.getElementById('homeName').textContent = username;
     loadStats(username);
-    showPage('home');
+    showPage('stats');
   }
 
   function logout() {
@@ -768,7 +634,6 @@
     location.reload();
   }
 
-  // Auto login
   window.addEventListener('DOMContentLoaded', () => {
     try {
       const current = localStorage.getItem('cloaket_current');
@@ -780,33 +645,22 @@
 
   // ========== NAVIGATION ==========
   function showPage(page) {
-    // Hide all pages
-    document.getElementById('page-home').style.display = 'none';
     document.querySelectorAll('.panel-view').forEach(p => p.classList.remove('active'));
-
-    // Update nav active state
     document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+
     const nav = document.querySelector(`.nav-item[data-page="${page}"]`);
     if (nav) nav.classList.add('active');
 
-    if (page === 'home') {
-      document.getElementById('page-home').style.display = 'block';
-    } else {
-      const panel = document.getElementById('page-' + page);
-      if (panel) panel.classList.add('active');
-    }
+    const panel = document.getElementById('page-' + page);
+    if (panel) panel.classList.add('active');
   }
 
   // ========== STATS ==========
   function loadStats(username) {
     const key = 'cloaket_stats_' + username;
-    const stats = JSON.parse(localStorage.getItem(key) || '{"games":0,"high":0,"cloaks":0}');
-    document.getElementById('statGames').textContent = stats.games;
-    document.getElementById('statHigh').textContent = stats.high;
-    document.getElementById('statCloaks').textContent = stats.cloaks;
-    document.getElementById('detailGames').textContent = stats.games;
-    document.getElementById('detailHigh').textContent = stats.high;
-    document.getElementById('detailCloaks').textContent = stats.cloaks;
+    const stats = JSON.parse(localStorage.getItem(key) || '{"cloaks":0,"items":0}');
+    document.getElementById('statCloaks').textContent = stats.cloaks || 0;
+    document.getElementById('statItems').textContent = stats.items || 0;
   }
 </script>
 </body>
