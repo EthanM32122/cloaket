@@ -5,19 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Cloaket</title>
 <style>
-  :root {
-    --bg: #0f0a1a;
-    --card: #1a1025;
-    --border: #2e1065;
-  }
-
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
   body {
-    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    font-family: Nunito, 'Segoe UI', system-ui, sans-serif;
     min-height: 100vh;
-    background: #0f0a1a;
-    color: #e9d5ff;
+    background: #0d0820;
+    color: #ece6ff;
     overflow-x: hidden;
   }
 
@@ -29,306 +23,182 @@
     background-clip: text;
   }
 
-  #landing {
-    display: flex;
-    min-height: 100vh;
-    position: relative;
-  }
-
+  #landing { display: flex; min-height: 100vh; position: relative; }
   .landing-left {
     flex: 1;
-    background: linear-gradient(160deg, #0f0a1a 0%, #1a1025 50%, #2e1065 100%);
+    background: linear-gradient(160deg, #0d0820 0%, #1a1030 50%, #2a1650 100%);
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: 60px 50px;
-    z-index: 2;
+    padding: 56px 48px;
   }
-
-  .landing-right {
-    flex: 1;
-    background: #0f0a1a;
-    position: relative;
-    border-left: 1px solid #2e1065;
-  }
-
+  .landing-right { flex: 1; background: #0d0820; border-left: 1px solid #2e1a55; }
   .logo {
-    font-size: clamp(3.2rem, 6vw, 5rem);
+    font-size: clamp(2.8rem, 5.5vw, 4.4rem);
     font-weight: 900;
     line-height: 0.95;
     letter-spacing: -2px;
-    margin-bottom: 20px;
+    margin-bottom: 18px;
   }
   .logo span { display: block; }
-
-  .tagline {
-    font-size: 1.15rem;
-    margin-bottom: 8px;
-    max-width: 340px;
-  }
-  .beta {
-    font-size: 0.95rem;
-    opacity: 0.7;
-    margin-bottom: 40px;
-  }
-
+  .tagline { font-size: 1.05rem; margin-bottom: 6px; max-width: 340px; }
+  .beta { font-size: 0.9rem; opacity: 0.7; margin-bottom: 32px; }
   .get-started-btn {
     display: inline-block;
-    padding: 14px 36px;
-    border: 2px solid #8b5cf6;
-    border-radius: 999px;
+    padding: 12px 28px;
+    border: 2px solid #7c3aed;
+    border-radius: 8px;
     background: transparent;
-    font-size: 1.1rem;
-    font-weight: 700;
+    font-size: 1rem;
+    font-weight: 800;
     cursor: pointer;
     font-family: inherit;
   }
-  .get-started-btn:hover { background: #2e1065; }
-
+  .get-started-btn:hover { background: #2a1650; }
   .top-auth {
-    position: absolute;
-    top: 24px;
-    right: 30px;
-    display: flex;
-    gap: 12px;
-    z-index: 10;
+    position: absolute; top: 18px; right: 22px; display: flex; gap: 10px; z-index: 10;
   }
   .top-auth button {
-    padding: 10px 22px;
-    border-radius: 999px;
-    font-weight: 700;
-    font-size: 0.95rem;
+    padding: 8px 18px;
+    border-radius: 8px;
+    font-weight: 800;
+    font-size: 0.9rem;
     cursor: pointer;
     font-family: inherit;
-    background: #1a1025;
+    background: #1a1030;
     border: 1px solid #4c1d95;
   }
-  .top-auth button:hover { background: #2e1065; }
+  .top-auth button:hover { background: #2a1650; }
 
   .modal-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.85);
-    display: none;
-    align-items: center;
-    justify-content: center;
-    z-index: 200;
-    padding: 20px;
+    position: fixed; inset: 0; background: rgba(0,0,0,0.82);
+    display: none; align-items: center; justify-content: center; z-index: 200; padding: 16px;
   }
   .modal-overlay.active { display: flex; }
-
   .modal {
-    background: #1a1025;
-    border: 1px solid #4c1d95;
-    border-radius: 20px;
-    padding: 32px 28px;
-    width: 100%;
-    max-width: 380px;
-    position: relative;
-    color: #e9d5ff;
-  }
-
-  .modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 22px;
-  }
-  .modal-title {
-    font-weight: 800;
-    font-size: 1.35rem;
-    padding: 8px 20px;
-    border-radius: 999px;
-    background: #2e1065;
-  }
-  .close-btn {
-    background: none;
-    border: none;
-    font-size: 1.6rem;
-    cursor: pointer;
-    color: #a78bfa;
-  }
-  .modal input {
-    width: 100%;
-    padding: 14px 16px;
-    margin-bottom: 14px;
+    background: #1a1030;
     border: 1px solid #4c1d95;
     border-radius: 12px;
-    background: #0f0a1a;
-    font-size: 1rem;
-    font-family: inherit;
-    color: #e9d5ff;
-  }
-  .modal input:focus { outline: 2px solid #8b5cf6; }
-  .modal input::placeholder { color: #6b7280; }
-
-  .modal-btn {
+    padding: 26px 24px;
     width: 100%;
-    padding: 15px;
+    max-width: 360px;
+    color: #ece6ff;
+  }
+  .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; }
+  .modal-title { font-weight: 800; font-size: 1.15rem; }
+  .close-btn { background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #a78bfa; }
+  .modal input, .settings-form input {
+    width: 100%;
+    padding: 11px 12px;
+    margin-bottom: 10px;
+    border: 2px solid #3b2270;
+    border-radius: 8px;
+    background: #0d0820;
+    font-size: 0.95rem;
+    font-family: inherit;
+    color: #ece6ff;
+  }
+  .modal input:focus, .settings-form input:focus { outline: none; border-color: #7c3aed; }
+  .modal input::placeholder, .settings-form input::placeholder { color: #6b7280; }
+  .modal-btn, .settings-form button {
+    width: 100%;
+    padding: 12px;
     background: #7c3aed;
     border: none;
-    border-radius: 12px;
-    font-size: 1.15rem;
-    font-weight: 700;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 800;
     cursor: pointer;
-    color: white;
+    color: #fff;
+    font-family: inherit;
   }
-  .modal-btn:hover { background: #6d28d9; }
+  .modal-btn:hover, .settings-form button:hover { background: #6d28d9; }
+  .switch-text { text-align: center; margin-top: 14px; font-size: 0.9rem; }
+  .switch-text a { font-weight: 800; cursor: pointer; }
+  .error-msg { color: #f87171; font-size: 0.85rem; margin-bottom: 8px; min-height: 18px; text-align: center; }
+  .ok-msg { color: #4ade80; font-size: 0.85rem; margin-bottom: 8px; min-height: 18px; }
 
-  .switch-text {
-    text-align: center;
-    margin-top: 18px;
-    font-size: 0.95rem;
-  }
-  .switch-text a {
-    font-weight: 700;
-    cursor: pointer;
-  }
-  .error-msg {
-    color: #f87171;
-    font-size: 0.9rem;
-    margin-bottom: 10px;
-    text-align: center;
-    min-height: 20px;
-  }
-
-  #app {
-    display: none;
-    min-height: 100vh;
-    background: #0f0a1a;
-  }
+  #app { display: none; min-height: 100vh; background: #0d0820; }
   #app.active { display: flex; }
 
   .sidebar {
-    width: 260px;
-    background: #1a1025;
-    color: white;
+    width: 200px;
+    background: #16102a;
     display: flex;
     flex-direction: column;
-    padding: 28px 16px;
-    border-right: 1px solid #2e1065;
+    padding: 16px 10px 14px;
+    border-right: 2px solid #2a1650;
     flex-shrink: 0;
   }
-
-  .sidebar-logo {
-    font-size: 2.1rem;
-    font-weight: 900;
-    text-align: center;
-    margin-bottom: 8px;
-  }
-
-  .sidebar-user {
-    text-align: center;
-    font-size: 1.05rem;
-    opacity: 0.75;
-    margin-bottom: 32px;
-  }
-
+  .sidebar-logo { font-size: 1.45rem; font-weight: 900; text-align: center; margin-bottom: 2px; }
+  .sidebar-user { text-align: center; font-size: 0.82rem; opacity: 0.75; margin-bottom: 18px; }
   .nav-item {
     display: flex;
     align-items: center;
-    gap: 14px;
-    padding: 16px 18px;
-    border-radius: 12px;
+    gap: 10px;
+    padding: 10px 12px;
+    border-radius: 8px;
     cursor: pointer;
-    margin-bottom: 8px;
-    font-weight: 700;
-    font-size: 1.15rem;
-    color: rgba(255,255,255,0.85);
+    margin-bottom: 4px;
+    font-weight: 800;
+    font-size: 0.92rem;
+    color: rgba(255,255,255,0.82);
   }
-  .nav-item:hover, .nav-item.active {
-    background: #2e1065;
-    color: white;
-  }
-  .nav-item .icon { font-size: 1.5rem; }
-
-  .sidebar-bottom {
-    margin-top: auto;
-    padding-top: 20px;
-  }
+  .nav-item:hover { background: #241848; color: #fff; }
+  .nav-item.active { background: #7c3aed; color: #fff; }
+  .nav-item .icon { font-size: 1.15rem; width: 22px; text-align: center; }
+  .sidebar-bottom { margin-top: auto; }
   .logout-btn {
     width: 100%;
-    padding: 14px;
+    padding: 9px;
     background: transparent;
-    border: 1px solid #4c1d95;
-    border-radius: 12px;
-    font-weight: 700;
-    font-size: 1.05rem;
+    border: 2px solid #3b2270;
+    border-radius: 8px;
+    font-weight: 800;
+    font-size: 0.88rem;
     cursor: pointer;
     font-family: inherit;
     color: #c4b5fd;
   }
-  .logout-btn:hover { background: #2e1065; }
+  .logout-btn:hover { background: #241848; }
 
   .main-content {
     flex: 1;
-    padding: 48px 56px;
+    padding: 28px 36px;
     overflow-y: auto;
     min-width: 0;
   }
-
-  .panel-view {
-    display: none;
-    width: 100%;
-    max-width: none;
-    background: none;
-    border: none;
-    padding: 0;
-  }
+  .panel-view { display: none; width: 100%; }
   .panel-view.active { display: block; }
-
   .panel-view h2 {
-    margin-bottom: 28px;
-    font-size: 3rem;
+    margin-bottom: 18px;
+    font-size: 1.7rem;
     font-weight: 900;
-    letter-spacing: -1px;
   }
 
-  .stats-bar {
-    display: flex;
-    gap: 48px;
-    margin-bottom: 36px;
-    flex-wrap: wrap;
-  }
-  .stat-card {
-    background: none;
-    border: none;
-    padding: 0;
-    min-width: 160px;
-    text-align: left;
-  }
-  .stat-value {
-    font-size: 3.4rem;
-    font-weight: 900;
-    line-height: 1;
-  }
-  .stat-label {
-    font-size: 1.15rem;
-    opacity: 0.7;
-    margin-top: 10px;
-  }
+  .stats-bar { display: flex; gap: 40px; margin-bottom: 18px; flex-wrap: wrap; }
+  .stat-value { font-size: 2rem; font-weight: 900; line-height: 1; }
+  .stat-label { font-size: 0.9rem; opacity: 0.7; margin-top: 6px; }
+  .page-body { font-size: 1rem; font-weight: 600; line-height: 1.5; opacity: 0.85; }
+  .page-body small { display: block; margin-top: 6px; font-size: 0.9rem; opacity: 0.65; }
 
-  .page-body {
-    font-size: 1.35rem;
-    font-weight: 600;
-    line-height: 1.6;
-    opacity: 0.85;
-  }
-  .page-body small {
-    display: block;
-    margin-top: 8px;
+  .settings-block { max-width: 380px; margin-bottom: 28px; }
+  .settings-block h3 {
     font-size: 1.05rem;
-    opacity: 0.65;
+    font-weight: 800;
+    margin-bottom: 10px;
   }
+  .settings-form button.danger { background: #b91c1c; }
+  .settings-form button.danger:hover { background: #991b1b; }
 
   @media (max-width: 768px) {
     #landing { flex-direction: column; }
-    .landing-right { min-height: 150px; }
-    .sidebar { width: 78px; padding: 20px 8px; }
+    .landing-right { min-height: 120px; }
+    .sidebar { width: 64px; padding: 12px 6px; }
     .nav-item span:not(.icon) { display: none; }
-    .sidebar-logo { font-size: 1.2rem; }
-    .main-content { padding: 28px 20px; }
-    .panel-view h2 { font-size: 2.2rem; }
+    .sidebar-logo { font-size: 0.7rem; }
+    .sidebar-user { display: none; }
+    .main-content { padding: 20px 16px; }
   }
 </style>
 </head>
@@ -336,10 +206,9 @@
 
 <div id="landing">
   <div class="top-auth">
-    <button class="login-btn" onclick="openModal('login')"><span class="rainbow">Login</span></button>
-    <button class="register-btn" onclick="openModal('register')"><span class="rainbow">Register</span></button>
+    <button onclick="openModal('login')"><span class="rainbow">Login</span></button>
+    <button onclick="openModal('register')"><span class="rainbow">Register</span></button>
   </div>
-
   <div class="landing-left">
     <div class="logo">
       <span class="rainbow">Cloaket</span>
@@ -351,7 +220,6 @@
     <div class="beta rainbow">Currently in Beta</div>
     <button class="get-started-btn" onclick="openModal('register')"><span class="rainbow">Get Started</span></button>
   </div>
-
   <div class="landing-right"></div>
 </div>
 
@@ -365,9 +233,7 @@
     <input type="text" id="loginUser" placeholder="Username" autocomplete="username">
     <input type="password" id="loginPass" placeholder="Password" autocomplete="current-password">
     <button class="modal-btn" onclick="doLogin()"><span class="rainbow">Login</span></button>
-    <div class="switch-text">
-      Don't have an account? <a onclick="switchModal('register')"><span class="rainbow">Register</span></a>
-    </div>
+    <div class="switch-text">Don't have an account? <a onclick="switchModal('register')"><span class="rainbow">Register</span></a></div>
   </div>
 </div>
 
@@ -382,9 +248,7 @@
     <input type="password" id="regPass" placeholder="Password" autocomplete="new-password">
     <input type="password" id="regPass2" placeholder="Confirm Password" autocomplete="new-password">
     <button class="modal-btn" onclick="doRegister()"><span class="rainbow">Create Account</span></button>
-    <div class="switch-text">
-      Already have an account? <a onclick="switchModal('login')"><span class="rainbow">Login</span></a>
-    </div>
+    <div class="switch-text">Already have an account? <a onclick="switchModal('login')"><span class="rainbow">Login</span></a></div>
   </div>
 </div>
 
@@ -392,23 +256,11 @@
   <div class="sidebar">
     <div class="sidebar-logo"><span class="rainbow">Cloaket</span></div>
     <div class="sidebar-user" id="sidebarUser">Player</div>
-
-    <div class="nav-item active" onclick="showPage('stats')" data-page="stats">
-      <span class="icon">📊</span> <span>Stats</span>
-    </div>
-    <div class="nav-item" onclick="showPage('market')" data-page="market">
-      <span class="icon">🛒</span> <span>Market</span>
-    </div>
-    <div class="nav-item" onclick="showPage('inventory')" data-page="inventory">
-      <span class="icon">🎒</span> <span>Inventory</span>
-    </div>
-    <div class="nav-item" onclick="showPage('leaderboard')" data-page="leaderboard">
-      <span class="icon">🏆</span> <span>Leaderboard</span>
-    </div>
-    <div class="nav-item" onclick="showPage('settings')" data-page="settings">
-      <span class="icon">⚙️</span> <span>Settings</span>
-    </div>
-
+    <div class="nav-item active" onclick="showPage('stats')" data-page="stats"><span class="icon">📊</span> <span>Stats</span></div>
+    <div class="nav-item" onclick="showPage('market')" data-page="market"><span class="icon">🛒</span> <span>Market</span></div>
+    <div class="nav-item" onclick="showPage('inventory')" data-page="inventory"><span class="icon">🎒</span> <span>Inventory</span></div>
+    <div class="nav-item" onclick="showPage('leaderboard')" data-page="leaderboard"><span class="icon">🏆</span> <span>Leaderboard</span></div>
+    <div class="nav-item" onclick="showPage('settings')" data-page="settings"><span class="icon">⚙️</span> <span>Settings</span></div>
     <div class="sidebar-bottom">
       <button class="logout-btn" onclick="logout()"><span class="rainbow">Logout</span></button>
     </div>
@@ -416,13 +268,13 @@
 
   <div class="main-content">
     <div id="page-stats" class="panel-view active">
-      <h2 class="rainbow">Your Stats</h2>
+      <h2 class="rainbow">Stats</h2>
       <div class="stats-bar">
-        <div class="stat-card">
+        <div>
           <div class="stat-value rainbow" id="statCloaks">0</div>
           <div class="stat-label">Cloaks</div>
         </div>
-        <div class="stat-card">
+        <div>
           <div class="stat-value rainbow" id="statItems">0</div>
           <div class="stat-label">Items</div>
         </div>
@@ -431,7 +283,7 @@
     </div>
 
     <div id="page-market" class="panel-view">
-      <h2 class="rainbow">Cloaks Market</h2>
+      <h2 class="rainbow">Market</h2>
       <div class="page-body">Market is currently empty.<small>New cloaks coming soon...</small></div>
     </div>
 
@@ -447,7 +299,36 @@
 
     <div id="page-settings" class="panel-view">
       <h2 class="rainbow">Settings</h2>
-      <div class="page-body">Settings coming soon.<small>Account options will appear here.</small></div>
+
+      <div class="settings-block">
+        <h3 class="rainbow">Change username</h3>
+        <div class="ok-msg" id="userMsg"></div>
+        <form class="settings-form" onsubmit="changeUsername(event)">
+          <input type="text" id="newUsername" placeholder="New username" autocomplete="username">
+          <input type="password" id="userPass" placeholder="Current password" autocomplete="current-password">
+          <button type="submit"><span class="rainbow">Save username</span></button>
+        </form>
+      </div>
+
+      <div class="settings-block">
+        <h3 class="rainbow">Change password</h3>
+        <div class="ok-msg" id="passMsg"></div>
+        <form class="settings-form" onsubmit="changePassword(event)">
+          <input type="password" id="oldPass" placeholder="Current password" autocomplete="current-password">
+          <input type="password" id="newPass" placeholder="New password" autocomplete="new-password">
+          <input type="password" id="newPass2" placeholder="Confirm new password" autocomplete="new-password">
+          <button type="submit"><span class="rainbow">Save password</span></button>
+        </form>
+      </div>
+
+      <div class="settings-block">
+        <h3 class="rainbow">Delete account</h3>
+        <div class="ok-msg" id="delMsg"></div>
+        <form class="settings-form" onsubmit="deleteAccount(event)">
+          <input type="password" id="delPass" placeholder="Type your password to confirm" autocomplete="current-password">
+          <button type="submit" class="danger">Delete account</button>
+        </form>
+      </div>
     </div>
   </div>
 </div>
@@ -459,6 +340,10 @@
   function safeSet(key, value) {
     try { localStorage.setItem(key, value); return true; } catch (e) { return false; }
   }
+  function getUsers() {
+    try { return JSON.parse(safeGet('cloaket_users', '{}')); } catch (e) { return {}; }
+  }
+  function currentUser() { return safeGet('cloaket_current', ''); }
 
   function openModal(type) {
     closeModals();
@@ -470,10 +355,7 @@
     document.getElementById('loginModal').classList.remove('active');
     document.getElementById('registerModal').classList.remove('active');
   }
-  function switchModal(type) {
-    closeModals();
-    openModal(type);
-  }
+  function switchModal(type) { closeModals(); openModal(type); }
 
   function doRegister() {
     const user = document.getElementById('regUser').value.trim();
@@ -481,21 +363,14 @@
     const pass2 = document.getElementById('regPass2').value;
     const err = document.getElementById('regError');
     err.textContent = '';
-
     if (!user || !pass) { err.textContent = 'Please fill in all fields'; return; }
     if (pass !== pass2) { err.textContent = 'Passwords do not match'; return; }
     if (pass.length < 3) { err.textContent = 'Password must be at least 3 characters'; return; }
-
-    let users = {};
-    try { users = JSON.parse(safeGet('cloaket_users', '{}')); } catch(e) {}
+    const users = getUsers();
     if (users[user]) { err.textContent = 'Username already taken'; return; }
-
     users[user] = pass;
-    if (!safeSet('cloaket_users', JSON.stringify(users))) {
-      err.textContent = 'Could not save account'; return;
-    }
+    if (!safeSet('cloaket_users', JSON.stringify(users))) { err.textContent = 'Could not save account'; return; }
     safeSet('cloaket_lastUser', user);
-
     closeModals();
     document.getElementById('loginUser').value = user;
     document.getElementById('loginPass').value = '';
@@ -510,15 +385,9 @@
     const err = document.getElementById('loginError');
     err.textContent = '';
     err.style.color = '#f87171';
-
     if (!user || !pass) { err.textContent = 'Please enter username and password'; return; }
-
-    let users = {};
-    try { users = JSON.parse(safeGet('cloaket_users', '{}')); } catch(e) {}
-    if (!users[user] || users[user] !== pass) {
-      err.textContent = 'Invalid username or password'; return;
-    }
-
+    const users = getUsers();
+    if (!users[user] || users[user] !== pass) { err.textContent = 'Invalid username or password'; return; }
     safeSet('cloaket_current', user);
     safeSet('cloaket_lastUser', user);
     afterLogin(user);
@@ -534,7 +403,7 @@
   }
 
   function logout() {
-    try { localStorage.removeItem('cloaket_current'); } catch(e) {}
+    try { localStorage.removeItem('cloaket_current'); } catch (e) {}
     location.reload();
   }
 
@@ -544,7 +413,7 @@
       const lastUser = localStorage.getItem('cloaket_lastUser');
       if (lastUser) document.getElementById('loginUser').value = lastUser;
       if (current) afterLogin(current);
-    } catch(e) {}
+    } catch (e) {}
   });
 
   function showPage(page) {
@@ -554,13 +423,85 @@
     if (nav) nav.classList.add('active');
     const panel = document.getElementById('page-' + page);
     if (panel) panel.classList.add('active');
+    ['userMsg','passMsg','delMsg'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) { el.textContent = ''; el.style.color = ''; }
+    });
   }
 
   function loadStats(username) {
-    const key = 'cloaket_stats_' + username;
-    const stats = JSON.parse(localStorage.getItem(key) || '{"cloaks":0,"items":0}');
+    const stats = JSON.parse(localStorage.getItem('cloaket_stats_' + username) || '{"cloaks":0,"items":0}');
     document.getElementById('statCloaks').textContent = stats.cloaks || 0;
     document.getElementById('statItems').textContent = stats.items || 0;
+  }
+
+  function setMsg(id, text, ok) {
+    const el = document.getElementById(id);
+    el.textContent = text;
+    el.style.color = ok ? '#4ade80' : '#f87171';
+  }
+
+  function changeUsername(e) {
+    e.preventDefault();
+    const oldName = currentUser();
+    const newName = document.getElementById('newUsername').value.trim();
+    const pass = document.getElementById('userPass').value;
+    if (!newName || !pass) { setMsg('userMsg', 'Fill in both fields', false); return; }
+    if (newName === oldName) { setMsg('userMsg', 'That is already your username', false); return; }
+    const users = getUsers();
+    if (!users[oldName] || users[oldName] !== pass) { setMsg('userMsg', 'Wrong password', false); return; }
+    if (users[newName]) { setMsg('userMsg', 'Username already taken', false); return; }
+    users[newName] = users[oldName];
+    delete users[oldName];
+    const oldStats = localStorage.getItem('cloaket_stats_' + oldName);
+    if (oldStats) {
+      localStorage.setItem('cloaket_stats_' + newName, oldStats);
+      localStorage.removeItem('cloaket_stats_' + oldName);
+    }
+    safeSet('cloaket_users', JSON.stringify(users));
+    safeSet('cloaket_current', newName);
+    safeSet('cloaket_lastUser', newName);
+    document.getElementById('sidebarUser').textContent = newName;
+    document.getElementById('newUsername').value = '';
+    document.getElementById('userPass').value = '';
+    setMsg('userMsg', 'Username updated', true);
+  }
+
+  function changePassword(e) {
+    e.preventDefault();
+    const name = currentUser();
+    const oldPass = document.getElementById('oldPass').value;
+    const newPass = document.getElementById('newPass').value;
+    const newPass2 = document.getElementById('newPass2').value;
+    if (!oldPass || !newPass) { setMsg('passMsg', 'Fill in all fields', false); return; }
+    if (newPass !== newPass2) { setMsg('passMsg', 'New passwords do not match', false); return; }
+    if (newPass.length < 3) { setMsg('passMsg', 'Password must be at least 3 characters', false); return; }
+    const users = getUsers();
+    if (!users[name] || users[name] !== oldPass) { setMsg('passMsg', 'Current password is wrong', false); return; }
+    users[name] = newPass;
+    safeSet('cloaket_users', JSON.stringify(users));
+    document.getElementById('oldPass').value = '';
+    document.getElementById('newPass').value = '';
+    document.getElementById('newPass2').value = '';
+    setMsg('passMsg', 'Password updated', true);
+  }
+
+  function deleteAccount(e) {
+    e.preventDefault();
+    const name = currentUser();
+    const pass = document.getElementById('delPass').value;
+    if (!pass) { setMsg('delMsg', 'Enter your password to confirm', false); return; }
+    const users = getUsers();
+    if (!users[name] || users[name] !== pass) { setMsg('delMsg', 'Wrong password', false); return; }
+    if (!confirm('Delete your account forever? This cannot be undone.')) return;
+    delete users[name];
+    safeSet('cloaket_users', JSON.stringify(users));
+    try {
+      localStorage.removeItem('cloaket_stats_' + name);
+      localStorage.removeItem('cloaket_current');
+      localStorage.removeItem('cloaket_lastUser');
+    } catch (err) {}
+    location.reload();
   }
 </script>
 </body>
