@@ -1,1 +1,270 @@
-LOADING
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cloaket</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0b0912;--panel:#14101f;--panel2:#1a1528;--border:#2c2540;--border2:#3d3558;--muted:#8a839c;--text:#f4f1fa;--purple:#8b5cf6;--gold:#fbbf24;--green:#34d399;--side:#0e0b16}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;font-family:Nunito,system-ui,sans-serif;background:var(--bg);color:var(--text);overflow:hidden;-webkit-font-smoothing:antialiased}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+input,select{font-family:inherit;color:var(--text)}
+.checker{background-color:var(--bg);background-image:linear-gradient(45deg,#100d1a 25%,transparent 25%),linear-gradient(-45deg,#100d1a 25%,transparent 25%),linear-gradient(45deg,transparent 75%,#100d1a 75%),linear-gradient(-45deg,transparent 75%,#100d1a 75%);background-size:28px 28px;background-position:0 0,0 14px,14px -14px,-14px 0}
+.text-rainbow{background:linear-gradient(90deg,#ef4444,#f59e0b,#eab308,#22c55e,#3b82f6,#8b5cf6,#ec4899);-webkit-background-clip:text;background-clip:text;color:transparent}
+.logo{width:88px;height:88px;margin:0 auto 20px;position:relative;filter:drop-shadow(0 10px 24px rgba(0,0,0,.55))}
+.logo svg{width:100%;height:100%;display:block}
+.logo-sm{width:38px;height:38px;margin:0;filter:drop-shadow(0 2px 6px rgba(0,0,0,.4))}
+#landing{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;z-index:50}
+#landing.hidden{display:none}
+.landing-inner{text-align:center;padding:32px 24px;max-width:440px}
+.landing-inner .welcome{font-size:13px;font-weight:800;letter-spacing:.28em;color:#c4bdd6;margin-bottom:8px}
+.landing-inner .brand{font-size:64px;font-weight:900;letter-spacing:3px;line-height:1;background:linear-gradient(90deg,#3b82f6 0%,#8b5cf6 40%,#ec4899 70%,#ef4444 100%);-webkit-background-clip:text;background-clip:text;color:transparent;margin-bottom:16px}
+.landing-inner .tag{color:var(--muted);font-size:15px;line-height:1.55;margin-bottom:32px;font-weight:600}
+.btn-row{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.btn{padding:15px 32px;border-radius:14px;font-weight:800;font-size:15px;letter-spacing:.04em;transition:transform .12s,filter .12s,box-shadow .12s}
+.btn:active{transform:scale(.97)}
+.btn-primary{background:linear-gradient(180deg,#a78bfa,#7c3aed);box-shadow:0 8px 28px rgba(124,58,237,.45),inset 0 1px 0 rgba(255,255,255,.2)}
+.btn-primary:hover{filter:brightness(1.08)}
+.btn-ghost{background:rgba(255,255,255,.04);border:1.5px solid var(--border2);box-shadow:0 4px 16px rgba(0,0,0,.25)}
+.btn-ghost:hover{background:rgba(255,255,255,.08)}
+.btn-sm{padding:9px 16px;border-radius:11px;font-size:13px}
+.btn-gold{background:linear-gradient(180deg,#fcd34d,#f59e0b);color:#1c1200;font-weight:900;box-shadow:0 4px 16px rgba(245,158,11,.35)}
+.btn-danger{background:#3f1520;color:#fb7185;border:1px solid #6b2030}
+.modal-bg{position:fixed;inset:0;background:rgba(5,3,12,.72);display:none;align-items:center;justify-content:center;z-index:100;backdrop-filter:blur(8px)}
+.modal-bg.open{display:flex}
+.modal{width:min(400px,92vw);background:var(--panel);border:1px solid var(--border);border-radius:22px;padding:32px 28px 26px;box-shadow:0 28px 80px rgba(0,0,0,.65)}
+.modal h2{text-align:center;font-size:30px;font-weight:900;margin:6px 0}
+.modal .sub{text-align:center;color:var(--muted);font-size:14px;margin-bottom:22px;font-weight:600}
+.field{margin-bottom:14px}
+.field label{display:block;font-size:11px;font-weight:800;letter-spacing:.1em;color:#9b93b0;margin-bottom:7px}
+.field input{width:100%;padding:13px 15px;border-radius:12px;border:1.5px solid var(--border);background:#0f0c18;font-size:15px;font-weight:600;outline:none}
+.field input:focus{border-color:var(--purple)}
+.field input::placeholder{color:#5a546c}
+.modal .btn{width:100%;margin-top:10px}
+.modal .switch{text-align:center;margin-top:16px;font-size:13px;color:var(--muted);font-weight:600}
+.modal .switch a{font-weight:800;cursor:pointer}
+.err{color:#fb7185;font-size:13px;text-align:center;min-height:18px;margin-top:8px;font-weight:700}
+#app{display:none;height:100vh}#app.active{display:flex}
+.sidebar{width:232px;flex-shrink:0;background:var(--side);border-right:1px solid var(--border);display:flex;flex-direction:column;padding:16px 12px;overflow-y:auto}
+.side-brand{display:flex;align-items:center;gap:10px;padding:4px 8px 18px;font-weight:900;font-size:19px}
+.nav-item{display:flex;align-items:center;gap:12px;padding:11px 14px;border-radius:12px;font-weight:800;font-size:14.5px;color:#a39bb8;text-align:left;width:100%;transition:background .12s,color .12s}
+.nav-item .ico{width:28px;height:28px;border-radius:9px;display:grid;place-items:center;font-size:14px;background:rgba(255,255,255,.04);flex-shrink:0}
+.nav-item:hover{background:rgba(255,255,255,.05);color:#fff}
+.nav-item.active{background:linear-gradient(90deg,rgba(139,92,246,.32),rgba(139,92,246,.06));color:#fff}
+.nav-item.active .ico{background:rgba(139,92,246,.35)}
+.side-spacer{flex:1;min-height:12px}
+.side-bottom{border-top:1px solid var(--border);padding-top:10px;margin-top:6px;display:flex;flex-direction:column;gap:2px}
+.nav-item.store{color:#7dd3fc}.nav-item.logout{color:#f87171}
+.main{flex:1;display:flex;flex-direction:column;min-width:0}
+.topbar{display:flex;align-items:center;justify-content:flex-end;gap:10px;padding:14px 22px 6px}
+.chip{display:inline-flex;align-items:center;gap:7px;background:var(--panel2);border:1px solid var(--border);border-radius:999px;padding:7px 14px;font-weight:800;font-size:13px}
+.chip .coin{color:var(--gold)}
+.content{flex:1;overflow:auto;padding:10px 24px 32px}
+.page{display:none}.page.active{display:block;animation:fadeIn .2s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.profile-row{display:grid;grid-template-columns:130px 1fr;gap:16px;margin-bottom:18px}
+.avatar-box{background:var(--panel);border:1px solid var(--border);border-radius:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;min-height:130px;cursor:pointer}
+.avatar-box .av{width:64px;height:64px;border-radius:14px;display:grid;place-items:center;font-size:30px;background:linear-gradient(145deg,#1e1830,#2a2340);border:1px solid var(--border)}
+.avatar-box span{font-size:12px;color:var(--muted);font-weight:700}
+.profile-card{background:var(--panel);border:1px solid var(--border);border-radius:18px;padding:20px 22px;position:relative;box-shadow:0 4px 24px rgba(0,0,0,.2)}
+.profile-card h2{font-size:30px;font-weight:900;display:inline-flex;align-items:center;gap:8px}
+.profile-card .edit{font-size:15px;opacity:.45;cursor:pointer}
+.profile-card .desc{color:var(--muted);font-size:13.5px;margin:4px 0 16px;font-weight:600}
+.xp-row{display:flex;align-items:center;gap:14px}
+.lvl-badge{background:#161022;border:1px solid var(--border);border-radius:14px;padding:10px 14px;text-align:center;min-width:70px}
+.lvl-badge b{display:block;font-size:22px}.lvl-badge small{font-size:10px;letter-spacing:.1em;color:var(--muted);font-weight:800}
+.xp-bar{flex:1;height:11px;background:#0f0c18;border-radius:999px;overflow:hidden;border:1px solid var(--border)}
+.xp-bar i{display:block;height:100%;width:0%;background:linear-gradient(90deg,#8b5cf6,#3b82f6);border-radius:999px}
+.claim-btn{position:absolute;top:18px;right:18px}
+.tools-row{display:flex;gap:8px;position:absolute;top:18px;right:220px;align-items:center}
+.search-mini{padding:9px 13px;border-radius:11px;border:1.5px solid var(--border);background:#0f0c18;font-size:13px;width:150px;font-weight:600;outline:none}
+.stat-panel{background:var(--panel);border:1px solid var(--border);border-radius:18px;padding:18px 20px;box-shadow:0 4px 24px rgba(0,0,0,.2)}
+.stat-panel h3{font-size:12px;letter-spacing:.14em;color:var(--muted);margin-bottom:14px;font-weight:800}
+.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.stat-card{background:var(--panel2);border:1px solid var(--border);border-radius:16px;padding:18px 16px;display:flex;align-items:center;gap:14px}
+.stat-card .icon{width:44px;height:44px;border-radius:13px;display:grid;place-items:center;font-size:22px;flex-shrink:0}
+.stat-card .val{font-size:24px;font-weight:900}.stat-card .lbl{font-size:11px;color:var(--muted);font-weight:800;letter-spacing:.08em}
+.page-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;flex-wrap:wrap;gap:12px}
+.page-head h1{font-size:34px;font-weight:900}
+.card{background:var(--panel);border:1px solid var(--border);border-radius:18px;padding:20px;box-shadow:0 4px 20px rgba(0,0,0,.18)}
+.muted{color:var(--muted);font-weight:600}
+.grid-packs{display:grid;grid-template-columns:repeat(auto-fill,minmax(158px,1fr));gap:16px}
+.pack-card{border-radius:18px;padding:16px 12px 14px;cursor:pointer;min-height:188px;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:6px;box-shadow:0 10px 28px rgba(0,0,0,.4);transition:transform .15s;border:1px solid rgba(255,255,255,.08)}
+.pack-card:hover{transform:translateY(-4px)}
+.pack-card img{width:96px;height:96px;object-fit:contain;filter:drop-shadow(0 6px 12px rgba(0,0,0,.45))}
+.pack-card .pname{font-weight:900;font-size:16px;text-shadow:0 2px 4px rgba(0,0,0,.5)}
+.pack-card .pprice{font-size:12px;font-weight:800}
+.pack-card .open-btn{margin-top:6px;background:rgba(0,0,0,.4);padding:7px 18px;border-radius:11px;font-weight:800;font-size:12px;border:1px solid rgba(255,255,255,.1)}
+.pack-filters{display:flex;gap:10px;overflow-x:auto;padding:4px 2px 14px}
+.pack-filters img{width:60px;height:60px;border-radius:14px;object-fit:cover;cursor:pointer;border:2.5px solid transparent;background:#15101f;flex-shrink:0;box-shadow:0 4px 12px rgba(0,0,0,.3)}
+.pack-filters img.active{border-color:var(--purple);box-shadow:0 0 0 3px rgba(139,92,246,.25)}
+.bazaar-toolbar{display:flex;gap:10px;align-items:center;margin-bottom:14px;flex-wrap:wrap}
+.bazaar-toolbar input{flex:1;min-width:180px;padding:12px 14px;border-radius:12px;border:1.5px solid var(--border);background:#0f0c18;font-weight:600;outline:none}
+.empty{text-align:center;padding:56px 16px;color:var(--muted)}
+.empty .big{font-size:48px;margin-bottom:10px;opacity:.4}
+.empty strong{display:block;color:var(--text);font-size:18px;margin-bottom:4px}
+.pack-section{margin-bottom:26px}
+.pack-section h3{font-size:19px;font-weight:900;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+.blook-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(76px,1fr));gap:10px}
+.blook-slot{aspect-ratio:1;border-radius:14px;background:#0c0a12;border:1px solid #252033;display:grid;place-items:center;position:relative;overflow:hidden}
+.blook-slot.locked{opacity:.5}
+.blook-slot.locked::after{content:"🔒";font-size:18px;opacity:.65}
+.blook-slot img{width:82%;height:82%;object-fit:contain}
+.blook-slot .qty{position:absolute;top:4px;right:5px;font-size:11px;font-weight:900;background:rgba(0,0,0,.65);padding:2px 6px;border-radius:7px}
+.blook-slot.owned{border-color:#3d3558;background:#14101f}
+.rarity-bar{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:16px}
+.rarity-bar button{padding:7px 14px;border-radius:999px;font-size:12px;font-weight:800;border:1.5px solid var(--border);background:var(--panel2);color:var(--muted)}
+.rarity-bar button.active{color:#fff;border-color:var(--purple);background:rgba(139,92,246,.22)}
+.craft-layout{display:grid;grid-template-columns:1.15fr .85fr;gap:16px}
+.slots-row{display:flex;gap:10px;margin:14px 0;flex-wrap:wrap}
+.slot-plus{width:68px;height:68px;border-radius:14px;border:2px dashed #3a3550;display:grid;place-items:center;color:#5a5470;font-size:24px;cursor:pointer;background:#0c0a12}
+.slot-plus.filled{border-style:solid;border-color:#6d5a9e;background:#14101f}
+.slot-plus img{width:50px;height:50px;object-fit:contain}
+.craft-btn{width:100%;padding:15px;border-radius:13px;font-weight:900;font-size:15px;background:linear-gradient(90deg,#f59e0b,#ea580c);color:#fff;margin-top:14px;box-shadow:0 6px 20px rgba(234,88,12,.35)}
+.inv-mini{display:flex;flex-wrap:wrap;gap:8px;max-height:190px;overflow:auto;margin-top:12px}
+.inv-mini .blook-slot{width:58px;height:58px;cursor:pointer}
+.center-empty{max-width:500px;margin:48px auto;text-align:center}
+.center-empty .icon-circle{width:80px;height:80px;border-radius:50%;background:rgba(139,92,246,.18);display:grid;place-items:center;margin:0 auto 18px;font-size:32px;border:1px solid rgba(139,92,246,.25)}
+.center-empty h1{font-size:30px;margin-bottom:8px;font-weight:900}
+.row-input{display:flex;gap:10px;margin-top:18px}
+.row-input input,.row-input select{flex:1;padding:13px 15px;border-radius:12px;border:1.5px solid var(--border);background:#0f0c18;font-weight:600;outline:none}
+.chat-box{background:var(--panel);border:1px solid var(--border);border-radius:18px;display:flex;flex-direction:column;height:min(62vh,540px);box-shadow:0 4px 24px rgba(0,0,0,.2)}
+.chat-msgs{flex:1;overflow:auto;padding:18px;display:flex;flex-direction:column;gap:10px}
+.chat-msg{font-size:14.5px;font-weight:600}.chat-msg .who{font-weight:900;color:#7dd3fc;margin-right:8px}.chat-msg .txt{color:#f0a8a8}
+.chat-input{display:flex;gap:10px;padding:14px;border-top:1px solid var(--border)}
+.chat-input input{flex:1;padding:13px 15px;border-radius:12px;border:1.5px solid var(--border);background:#0f0c18;font-weight:600;outline:none}
+.lb-tabs{display:flex;gap:8px}
+.lb-tabs button{padding:9px 16px;border-radius:11px;font-weight:800;background:var(--panel2);border:1.5px solid var(--border);color:var(--muted)}
+.lb-tabs button.active{background:var(--purple);color:#fff;border-color:var(--purple)}
+.lb-list{margin-top:16px}
+.lb-row{display:flex;align-items:center;gap:14px;padding:14px 16px;border-radius:14px;background:var(--panel);border:1px solid var(--border);margin-bottom:8px}
+.lb-row .rank{width:32px;font-weight:900;color:var(--gold)}
+.store-hero{max-width:660px;margin:24px auto;background:linear-gradient(165deg,#1a1435,#100e1c);border:1px solid #3d2f6e;border-radius:22px;padding:32px 28px;text-align:center;box-shadow:0 0 60px rgba(100,70,200,.2)}
+.store-hero .badge{display:inline-block;background:#2a2055;color:#c4b5fd;font-size:11px;font-weight:900;letter-spacing:.12em;padding:5px 12px;border-radius:999px;margin-bottom:12px}
+.store-hero h1{font-size:30px;font-weight:900;color:#7dd3fc;margin-bottom:6px}
+.store-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:24px 0}
+.store-item{background:rgba(0,0,0,.28);border:1px solid #2c2540;border-radius:14px;padding:14px 10px;font-size:12px;font-weight:800}
+.store-item .em{font-size:24px;margin-bottom:8px}
+.btn-buy{width:100%;padding:16px;border-radius:14px;font-weight:900;font-size:16px;background:linear-gradient(90deg,#3b82f6,#06b6d4);color:#fff;box-shadow:0 8px 28px rgba(59,130,246,.35)}
+#openModal .modal{text-align:center;max-width:340px}
+#openModal img{width:130px;height:130px;object-fit:contain;margin:10px auto;filter:drop-shadow(0 8px 20px rgba(0,0,0,.4))}
+#openModal .rarity{font-weight:900;margin:8px 0 16px;font-size:15px}
+.mine-area{text-align:center;padding:48px 20px}
+.mine-btn{width:150px;height:150px;border-radius:50%;border:4px solid var(--purple);font-size:24px;font-weight:900;background:radial-gradient(circle at 32% 28%,#2e2450,#0e0b16);box-shadow:0 0 40px rgba(139,92,246,.35)}
+.mine-btn:active{transform:scale(.95)}
+.settings-list{display:flex;flex-direction:column;gap:16px;max-width:440px}.settings-list .field{margin:0}
+@media(max-width:960px){.craft-layout{grid-template-columns:1fr}.stat-grid{grid-template-columns:1fr 1fr}.profile-row{grid-template-columns:1fr}.tools-row{position:static;margin-bottom:10px}.claim-btn{position:static;margin-top:12px;width:100%}.sidebar{width:72px}.nav-item span:not(.ico),.side-brand .text-rainbow{display:none}.nav-item{justify-content:center}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute"><defs>
+<linearGradient id="cloakGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#4c1d95"/></linearGradient>
+<linearGradient id="cGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#7dd3fc"/><stop offset="100%" stop-color="#38bdf8"/></linearGradient>
+</defs></svg>
+<div id="landing" class="checker">
+  <div class="landing-inner">
+    <div class="logo"><svg viewBox="0 0 100 100" fill="none"><ellipse cx="50" cy="22" rx="38" ry="16" fill="url(#cloakGrad)"/><path d="M18 28 Q12 55 20 88 Q35 78 50 80 Q65 78 80 88 Q88 55 82 28 Z" fill="url(#cloakGrad)"/><rect x="28" y="32" width="44" height="44" rx="12" fill="#0f172a" stroke="#c9a227" stroke-width="3"/><text x="50" y="64" text-anchor="middle" font-family="Nunito,sans-serif" font-weight="900" font-size="32" fill="url(#cGrad)">C</text></svg></div>
+    <div class="welcome">WELCOME TO</div>
+    <div class="brand">CLOAKET</div>
+    <p class="tag">Collect rare blooks, open packs, trade with friends, and dominate the leaderboard.</p>
+    <div class="btn-row">
+      <button class="btn btn-primary" onclick="openRegister()">PLAY NOW</button>
+      <button class="btn btn-ghost" onclick="openLogin()">SIGN IN</button>
+    </div>
+  </div>
+</div>
+<div class="modal-bg" id="regModal"><div class="modal">
+  <div class="logo logo-sm" style="margin:0 auto 8px"><svg viewBox="0 0 100 100" fill="none"><ellipse cx="50" cy="22" rx="38" ry="16" fill="url(#cloakGrad)"/><path d="M18 28 Q12 55 20 88 Q35 78 50 80 Q65 78 80 88 Q88 55 82 28 Z" fill="url(#cloakGrad)"/><rect x="28" y="32" width="44" height="44" rx="12" fill="#0f172a" stroke="#c9a227" stroke-width="3"/><text x="50" y="64" text-anchor="middle" font-family="Nunito,sans-serif" font-weight="900" font-size="32" fill="url(#cGrad)">C</text></svg></div>
+  <h2 class="text-rainbow">CLOAKET</h2><div class="sub">Join the private server</div>
+  <div class="field"><label>USERNAME</label><input id="regUser" placeholder="3-20 characters" maxlength="20"></div>
+  <div class="field"><label>PASSWORD</label><input id="regPass" type="password" placeholder="At least 8 characters"></div>
+  <div class="field"><label>CONFIRM PASSWORD</label><input id="regPass2" type="password" placeholder="Repeat password"></div>
+  <button class="btn btn-primary" onclick="doRegister()">SIGN UP</button><div class="err" id="regErr"></div>
+  <div class="switch">Have an account? <a onclick="closeModals();openLogin()">Sign in</a></div>
+</div></div>
+<div class="modal-bg" id="loginModal"><div class="modal">
+  <div class="logo logo-sm" style="margin:0 auto 8px"><svg viewBox="0 0 100 100" fill="none"><ellipse cx="50" cy="22" rx="38" ry="16" fill="url(#cloakGrad)"/><path d="M18 28 Q12 55 20 88 Q35 78 50 80 Q65 78 80 88 Q88 55 82 28 Z" fill="url(#cloakGrad)"/><rect x="28" y="32" width="44" height="44" rx="12" fill="#0f172a" stroke="#c9a227" stroke-width="3"/><text x="50" y="64" text-anchor="middle" font-family="Nunito,sans-serif" font-weight="900" font-size="32" fill="url(#cGrad)">C</text></svg></div>
+  <h2 class="text-rainbow">CLOAKET</h2><div class="sub">Welcome back</div>
+  <div class="field"><label>USERNAME</label><input id="loginUser" placeholder="Your username"></div>
+  <div class="field"><label>PASSWORD</label><input id="loginPass" type="password" placeholder="Your password"></div>
+  <button class="btn btn-primary" onclick="doLogin()">SIGN IN</button><div class="err" id="loginErr"></div>
+  <div class="switch">New here? <a onclick="closeModals();openRegister()">Create account</a></div>
+</div></div>
+<div class="modal-bg" id="openModal"><div class="modal">
+  <img id="openImg" src="" alt=""><h2 id="openName" style="font-size:24px">Blook</h2>
+  <div class="rarity" id="openRarity">Common</div>
+  <button class="btn btn-primary" onclick="closeOpen()">Continue</button>
+</div></div>
+<div id="app">
+  <aside class="sidebar">
+    <div class="side-brand"><div class="logo logo-sm"><svg viewBox="0 0 100 100" fill="none"><ellipse cx="50" cy="22" rx="38" ry="16" fill="url(#cloakGrad)"/><path d="M18 28 Q12 55 20 88 Q35 78 50 80 Q65 78 80 88 Q88 55 82 28 Z" fill="url(#cloakGrad)"/><rect x="28" y="32" width="44" height="44" rx="12" fill="#0f172a" stroke="#c9a227" stroke-width="3"/><text x="50" y="64" text-anchor="middle" font-family="Nunito,sans-serif" font-weight="900" font-size="32" fill="url(#cGrad)">C</text></svg></div><span class="text-rainbow">CLOAKET</span></div>
+    <nav id="nav"></nav>
+    <div class="side-spacer"></div>
+    <div class="side-bottom">
+      <button class="nav-item store" data-page="store" onclick="showPage('store')"><span class="ico">$</span><span>Store</span></button>
+      <button class="nav-item logout" onclick="logout()"><span class="ico">↩</span><span>Log out</span></button>
+    </div>
+  </aside>
+  <div class="main checker">
+    <div class="topbar">
+      <div class="chip"><span class="coin">⬤</span> <span id="chipTokens">0</span></div>
+      <div class="chip" id="chipUser">Player</div>
+      <div class="chip" style="width:36px;justify-content:center;padding:7px">?</div>
+    </div>
+    <div class="content">
+      <section id="page-stats" class="page active">
+        <div class="profile-row">
+          <div class="avatar-box" onclick="alert('Avatar picker coming soon')"><div class="av">👤</div><span>Change Avatar</span></div>
+          <div class="profile-card">
+            <button class="btn btn-gold btn-sm claim-btn" onclick="claimDaily()">🎁 CLAIM 4,000 DAILY TOKENS</button>
+            <div class="tools-row"><input class="search-mini" id="playerSearch" placeholder="Search player..."><button class="btn btn-ghost btn-sm" onclick="viewPlayerStats()">View Stats</button></div>
+            <h2><span id="statName">Player</span> <span class="edit" onclick="showPage('settings')">✎</span></h2>
+            <div class="desc">Collection overview and history.</div>
+            <div class="xp-row">
+              <div class="lvl-badge"><b id="statLevel">1</b><small>LEVEL</small></div>
+              <div style="flex:1"><div style="display:flex;justify-content:space-between;font-size:11px;font-weight:800;color:var(--muted);margin-bottom:5px"><span>EXPERIENCE</span><span id="statXpLabel">0 XP</span></div><div class="xp-bar"><i id="xpFill"></i></div></div>
+            </div>
+          </div>
+        </div>
+        <div class="stat-panel"><h3>STATS</h3><div class="stat-grid">
+          <div class="stat-card"><div class="icon" style="background:linear-gradient(145deg,#3d3010,#2a2008)">🪙</div><div><div class="val" id="sTokens">0</div><div class="lbl">TOKENS</div></div></div>
+          <div class="stat-card"><div class="icon" style="background:linear-gradient(145deg,#2e1a48,#1a0f30)">🔒</div><div><div class="val" id="sBlooks">0 / 0</div><div class="lbl">BLOOKS</div></div></div>
+          <div class="stat-card"><div class="icon" style="background:linear-gradient(145deg,#0f2e1c,#0a1f14)">📦</div><div><div class="val" id="sOpened">0</div><div class="lbl">OPENED</div></div></div>
+          <div class="stat-card"><div class="icon" style="background:linear-gradient(145deg,#0f1e32,#0a1524)">💬</div><div><div class="val" id="sMessages">0</div><div class="lbl">MESSAGES</div></div></div>
+        </div></div>
+      </section>
+      <section id="page-mine" class="page"><div class="page-head"><h1>Mine</h1></div><div class="mine-area"><button class="mine-btn" onclick="doMine()">MINE</button><p class="muted" style="margin-top:18px" id="mineStatus">Mine for tokens</p><p id="mineResult" style="font-weight:900;margin-top:10px;font-size:20px"></p></div></section>
+      <section id="page-market" class="page"><div class="page-head"><h1>Market</h1><span class="muted">Open packs · real odds</span></div><div class="grid-packs" id="marketGrid"></div></section>
+      <section id="page-blooks" class="page"><div class="page-head"><h1>My Blooks</h1></div><div class="rarity-bar" id="rarityBar"></div><div id="blooksByPack"></div></section>
+      <section id="page-bazaar" class="page">
+        <div class="page-head"><h1>Bazaar</h1><button class="btn btn-ghost btn-sm" onclick="showMyListings()">My Listings</button></div>
+        <div class="pack-filters" id="bazaarFilters"></div>
+        <div class="bazaar-toolbar"><input id="bazaarSearch" placeholder="Search..." oninput="renderBazaar()"><button class="btn btn-ghost btn-sm" onclick="document.getElementById('bazaarSearch').value='';renderBazaar()">Clear Filters</button></div>
+        <div class="card"><div style="display:flex;justify-content:space-between;margin-bottom:14px"><span class="muted" id="bazaarCount">Results: 0</span><span class="chip" style="padding:5px 12px;font-size:12px">BAZAAR</span></div><div id="bazaarList"></div></div>
+        <div class="card" style="margin-top:14px"><h3 style="margin-bottom:12px;font-weight:900">Create listing</h3><div class="row-input" style="margin-top:0"><select id="listBlook"></select><input id="listPrice" type="number" min="1" placeholder="Price" style="width:110px;flex:0 0 110px"><button class="btn btn-primary btn-sm" onclick="createListing()">List</button></div></div>
+      </section>
+      <section id="page-craft" class="page">
+        <div class="page-head"><h1>🔨 Craft</h1><span class="muted">Put in 2 to 5 blooks — get 1 of 5 possible. Risky.</span></div>
+        <div class="craft-layout">
+          <div class="card"><div class="muted" style="font-size:12px;font-weight:800;letter-spacing:.1em">INGREDIENTS (<span id="craftCount">0</span>/5)</div><div class="slots-row" id="craftSlots"></div><input id="craftSearch" placeholder="Search your blooks..." style="width:100%;padding:12px 14px;border-radius:12px;border:1.5px solid var(--border);background:#0f0c18;margin-top:6px;font-weight:600;outline:none" oninput="renderCraftInv()"><div class="inv-mini" id="craftInv"></div></div>
+          <div class="card"><div class="muted" style="font-size:12px;font-weight:800;letter-spacing:.1em">POSSIBLE RESULTS</div><div class="empty" id="craftResults" style="padding:32px 12px"><div class="big">🔨</div>Add blooks to see what you could craft.</div><div style="margin-top:12px;font-size:13px;font-weight:700"><span style="color:var(--green)">● 2.5x Craft Luck</span> <span class="muted"> — Starter Bundle</span></div><button class="craft-btn" onclick="doCraft()">🔨 CRAFT — 50 tokens</button><p class="muted" style="font-size:11px;margin-top:10px">Costs 50 tokens. Ingredients are consumed.</p></div>
+        </div>
+      </section>
+      <section id="page-trade" class="page"><div class="card center-empty"><div class="icon-circle">⇄</div><h1>Live Trading</h1><p class="muted">Trade blooks and tokens with other players.</p><div class="row-input"><input id="tradeUser" placeholder="Enter a username..."><button class="btn btn-primary" onclick="sendTradeRequest()">Send Request</button></div><div id="tradeList" style="margin-top:22px;text-align:left"></div></div></section>
+      <section id="page-clans" class="page"><div class="page-head"><div><h1>Clans</h1><p class="muted" style="margin-top:4px">Join a clan to chat, trade, and dominate together.</p></div><button class="btn btn-primary" onclick="createClan()">+ Create Clan</button></div><input id="clanSearch" placeholder="Search clans or owners..." style="width:100%;padding:13px 15px;border-radius:12px;border:1.5px solid var(--border);background:#0f0c18;margin-bottom:16px;font-weight:600;outline:none" oninput="renderClans()"><div id="clanList"></div></section>
+      <section id="page-friends" class="page"><div class="card"><div class="row-input" style="margin-top:0"><input id="friendUser" placeholder="Add a friend by username..."><button class="btn btn-primary" onclick="addFriend()">Add</button></div><div style="margin-top:20px"><h3 style="margin-bottom:12px;font-weight:900">👥 Friends (<span id="friendCount">0</span>)</h3><div id="friendList" class="muted">No friends yet.</div></div></div></section>
+      <section id="page-chat" class="page"><div class="chat-box"><div style="padding:14px 18px;border-bottom:1px solid var(--border);font-weight:900;display:flex;align-items:center;gap:8px;font-size:14px">GLOBAL CHAT <span style="width:8px;height:8px;border-radius:50%;background:var(--green);display:inline-block"></span><span class="muted" style="font-weight:700;font-size:12px" id="chatOnline">1</span></div><div class="chat-msgs" id="chatMsgs"></div><div class="chat-input"><input id="chatInput" placeholder="Type a message..." onkeydown="if(event.key==='Enter')sendChat()"><button class="btn btn-primary" onclick="sendChat()">SEND</button></div></div></section>
+      <section id="page-leaderboard" class="page"><div class="page-head"><div><h1>Leaderboard</h1><p class="muted" style="margin-top:4px">Top players by experience.</p></div><div class="lb-tabs"><button class="active" id="lbXp" onclick="setLbMode('xp')">🏆 XP</button><button id="lbMine" onclick="setLbMode('mine')">⛏ MINE RATE</button></div></div><div class="lb-list" id="lbList"></div></section>
+      <section id="page-gifts" class="page"><div class="page-head"><h1>Gifts</h1></div><div class="card"><div class="row-input" style="margin-top:0"><select id="giftBlook"></select><input id="giftUser" placeholder="Username" style="width:150px;flex:0 0 150px"><button class="btn btn-primary btn-sm" onclick="sendGift()">Send gift</button></div><div id="giftList" class="muted" style="margin-top:18px">No gifts.</div></div></section>
+      <section id="page-store" class="page"><div class="store-hero"><div class="badge">LIMITED STARTER BUNDLE</div><h1>CLOAKET STARTER BUNDLE</h1><p class="muted">One purchase. Nine permanent rewards.</p><div class="store-grid"><div class="store-item"><div class="em">🪙</div>75,000<br>TOKENS</div><div class="store-item"><div class="em">👑</div>Golden Name</div><div class="store-item"><div class="em">💎</div>2 Random Chromas</div><div class="store-item"><div class="em">🎨</div>Text Colors</div><div class="store-item"><div class="em">🅰</div>Name Colors</div><div class="store-item"><div class="em">🍀</div>2.5x Craft Luck</div><div class="store-item"><div class="em">⬆</div>2 Clan Boosts</div><div class="store-item"><div class="em">🌈</div>Rainbow Clan</div></div><button class="btn-buy" onclick="buyStarter()">BUY NOW — $4.99</button><p class="muted" style="font-size:11px;margin-top:12px">🔒 Demo checkout — no real payment</p></div><div class="card" style="max-width:400px;margin:22px auto"><h3 style="margin-bottom:10px;font-weight:900">Daily Tokens</h3><p class="muted" style="margin-bottom:12px">+4,000 tokens / day</p><button class="btn btn-gold" style="width:100%" onclick="claimDaily()">Claim</button></div></section>
+      <section id="page-admin" class="page"><div class="page-head"><h1>Owner / Admin</h1></div><div class="card settings-list"><div class="field"><label>GIVE TOKENS — PLAYER</label><input id="admUser" placeholder="username"></div><div class="field"><label>AMOUNT</label><input id="admAmt" type="number" value="1000"></div><button class="btn btn-primary" onclick="adminGive()">Give tokens</button><div class="field" style="margin-top:8px"><label>SET ROLE</label><select id="admRole" style="width:100%;padding:13px;border-radius:12px;background:#0f0c18;border:1.5px solid var(--border);font-weight:600"><option>player</option><option>mod</option><option>admin</option><option>coowner</option><option>owner</option></select></div><button class="btn btn-ghost" onclick="adminRole()">Set role</button></div></section>
+      <section id="page-settings" class="page"><div class="page-head"><h1>Settings</h1></div><div class="card settings-list"><div class="field"><label>CHANGE USERNAME</label><input id="setUser" placeholder="New username"></div><button class="btn btn-primary btn-sm" onclick="changeUsername()">Save</button><div class="field"><label>CHANGE PASSWORD</label><input id="setPass" type="password" placeholder="New password"></div><button class="btn btn-primary btn-sm" onclick="changePassword()">Save</button><button class="btn btn-danger" style="margin-top:12px" onclick="deleteAccount()">Delete account</button></div></section>
+    </div>
+  </div>
+</div>
+<script src="catalog.js"></script>
+<script src="game.js"></script>
+</body>
+</html>
