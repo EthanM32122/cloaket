@@ -1,1 +1,290 @@
-PLACEHOLDER
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cloaket</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0d0b14;--panel:#15121f;--panel2:#1c1829;--border:#2a2438;--muted:#8b8499;--text:#f2f0f7;--purple:#7c5cff;--purple2:#9b6dff;--gold:#f5c542;--green:#2ee59d}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;font-family:Nunito,system-ui,sans-serif;background:var(--bg);color:var(--text);overflow:hidden}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+input,select{font-family:inherit;color:var(--text)}
+.text-rainbow{background:linear-gradient(90deg,#ff4d6d,#ff9f43,#ffe66d,#2ee59d,#4da3ff,#9b6dff,#ff4d6d);-webkit-background-clip:text;background-clip:text;color:transparent}
+.logo-mark{width:72px;height:72px;border-radius:18px;background:linear-gradient(145deg,#1a1530,#2a2050);border:3px solid #5c4a2a;box-shadow:0 8px 24px rgba(0,0,0,.45);display:grid;place-items:center;position:relative;margin:0 auto 18px}
+.logo-mark::before{content:"";position:absolute;inset:-10px -6px auto;height:28px;background:radial-gradient(ellipse at center,#6b3fa0 0%,#3a2060 70%,transparent 71%);border-radius:50% 50% 40% 40%;opacity:.95;z-index:0}
+.logo-mark span{position:relative;z-index:1;font-size:36px;font-weight:900;color:#6ec8ff;text-shadow:0 2px 0 #1a3a5c,0 0 12px rgba(110,200,255,.5)}
+.logo-sm{width:36px;height:36px;border-radius:10px;border-width:2px;margin:0}
+.logo-sm span{font-size:18px}
+#landing{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg,rgba(13,11,20,.55),rgba(13,11,20,.85)),repeating-conic-gradient(from 0deg at 50% 50%,#12101a 0% 25%,#0d0b14 0% 50%);background-size:100% 100%,28px 28px;z-index:50}
+#landing.hidden{display:none}
+.landing-card{text-align:center;padding:24px}
+.landing-card h1{font-size:14px;letter-spacing:.2em;color:#c9c4d6;font-weight:800;margin-bottom:6px}
+.landing-card .title{font-size:56px;font-weight:900;letter-spacing:2px;margin-bottom:14px;background:linear-gradient(90deg,#3b82f6,#8b5cf6,#ec4899,#ef4444);-webkit-background-clip:text;background-clip:text;color:transparent}
+.landing-card p{color:var(--muted);max-width:360px;margin:0 auto 28px;line-height:1.5;font-size:15px}
+.btn-row{display:flex;gap:12px;justify-content:center}
+.btn{padding:14px 28px;border-radius:14px;font-weight:800;font-size:15px;letter-spacing:.04em;transition:.15s}
+.btn-primary{background:linear-gradient(180deg,#9b6dff,#7c5cff);box-shadow:0 6px 20px rgba(124,92,255,.4)}
+.btn-primary:hover{filter:brightness(1.08);transform:translateY(-1px)}
+.btn-ghost{background:rgba(255,255,255,.04);border:1px solid var(--border)}
+.btn-ghost:hover{background:rgba(255,255,255,.08)}
+.btn-sm{padding:8px 14px;border-radius:10px;font-size:13px}
+.btn-gold{background:linear-gradient(180deg,#ffd76a,#f5b942);color:#1a1200;font-weight:900}
+.btn-danger{background:#3a1520;color:#ff6b8a;border:1px solid #5a2030}
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.65);display:none;align-items:center;justify-content:center;z-index:100;backdrop-filter:blur(4px)}
+.modal-bg.open{display:flex}
+.modal{width:min(400px,92vw);background:var(--panel);border:1px solid var(--border);border-radius:20px;padding:28px 26px 24px;box-shadow:0 24px 60px rgba(0,0,0,.55)}
+.modal h2{text-align:center;font-size:28px;font-weight:900;margin:4px 0 6px}
+.modal .sub{text-align:center;color:var(--muted);font-size:14px;margin-bottom:20px}
+.field{margin-bottom:14px}
+.field label{display:block;font-size:11px;font-weight:800;letter-spacing:.08em;color:#a39cb8;margin-bottom:6px}
+.field input{width:100%;padding:12px 14px;border-radius:12px;border:1px solid var(--border);background:#1a1626;font-size:15px;outline:none}
+.field input:focus{border-color:var(--purple)}
+.modal .btn{width:100%;margin-top:8px}
+.modal .switch{text-align:center;margin-top:14px;font-size:13px;color:var(--muted)}
+.modal .switch a{color:var(--purple2);font-weight:800;cursor:pointer}
+.err{color:#ff6b8a;font-size:13px;text-align:center;min-height:18px;margin-top:6px}
+#app{display:none;height:100vh}
+#app.active{display:flex}
+.sidebar{width:220px;flex-shrink:0;background:#110e1a;border-right:1px solid var(--border);display:flex;flex-direction:column;padding:14px 10px;gap:4px;overflow-y:auto}
+.side-brand{display:flex;align-items:center;gap:10px;padding:6px 8px 14px;font-weight:900;font-size:18px}
+.nav-item{display:flex;align-items:center;gap:12px;padding:11px 14px;border-radius:12px;font-weight:800;font-size:14.5px;color:#b8b0c9;text-align:left;width:100%}
+.nav-item .ico{width:22px;text-align:center;font-size:16px;opacity:.9}
+.nav-item:hover{background:rgba(255,255,255,.04);color:#fff}
+.nav-item.active{background:linear-gradient(90deg,rgba(124,92,255,.28),rgba(124,92,255,.08));color:#fff}
+.side-spacer{flex:1}
+.side-bottom{border-top:1px solid var(--border);padding-top:8px;margin-top:8px}
+.nav-item.store{color:#7dd3fc}
+.nav-item.logout{color:#f87171}
+.main{flex:1;display:flex;flex-direction:column;min-width:0;background:linear-gradient(180deg,rgba(13,11,20,.3),rgba(13,11,20,.7)),repeating-conic-gradient(from 0deg at 50% 50%,#12101a 0% 25%,#0d0b14 0% 50%);background-size:100% 100%,32px 32px}
+.topbar{display:flex;align-items:center;justify-content:flex-end;gap:10px;padding:12px 20px}
+.chip{display:inline-flex;align-items:center;gap:6px;background:var(--panel2);border:1px solid var(--border);border-radius:999px;padding:6px 12px;font-weight:800;font-size:13px}
+.chip .coin{color:var(--gold)}
+.content{flex:1;overflow:auto;padding:8px 22px 28px}
+.page{display:none}
+.page.active{display:block;animation:fade .18s ease}
+@keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+.profile-row{display:grid;grid-template-columns:120px 1fr;gap:16px;margin-bottom:18px}
+.avatar-box{background:var(--panel);border:1px solid var(--border);border-radius:16px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;min-height:120px;cursor:pointer}
+.avatar-box .av{width:56px;height:56px;border-radius:12px;display:grid;place-items:center;font-size:28px;background:#2a2438}
+.avatar-box span{font-size:12px;color:var(--muted);font-weight:700}
+.profile-card{background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:18px 20px;position:relative}
+.profile-card h2{font-size:28px;font-weight:900;display:inline-flex;align-items:center;gap:8px}
+.profile-card .edit{font-size:14px;opacity:.5;cursor:pointer}
+.profile-card .desc{color:var(--muted);font-size:13px;margin:4px 0 14px}
+.xp-row{display:flex;align-items:center;gap:14px}
+.lvl-badge{background:#1a1530;border:1px solid var(--border);border-radius:12px;padding:8px 12px;text-align:center;min-width:64px}
+.lvl-badge b{display:block;font-size:20px}
+.lvl-badge small{font-size:10px;letter-spacing:.08em;color:var(--muted);font-weight:800}
+.xp-bar{flex:1;height:10px;background:#1a1626;border-radius:999px;overflow:hidden;border:1px solid var(--border)}
+.xp-bar i{display:block;height:100%;width:0%;background:linear-gradient(90deg,#7c5cff,#4da3ff);border-radius:999px}
+.claim-btn{position:absolute;top:16px;right:16px}
+.tools-row{display:flex;gap:8px;position:absolute;top:16px;right:210px}
+.search-mini{padding:8px 12px;border-radius:10px;border:1px solid var(--border);background:#1a1626;font-size:13px;width:140px}
+.stat-panel{background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:16px}
+.stat-panel h3{font-size:12px;letter-spacing:.12em;color:var(--muted);margin-bottom:12px}
+.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.stat-card{background:var(--panel2);border:1px solid var(--border);border-radius:14px;padding:16px;display:flex;align-items:center;gap:12px}
+.stat-card .icon{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;font-size:20px}
+.stat-card .val{font-size:22px;font-weight:900;line-height:1.1}
+.stat-card .lbl{font-size:11px;color:var(--muted);font-weight:800;letter-spacing:.06em}
+.page-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px}
+.page-head h1{font-size:32px;font-weight:900}
+.card{background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:18px}
+.muted{color:var(--muted)}
+.grid-packs{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px}
+.pack-card{border-radius:16px;padding:14px;cursor:pointer;position:relative;min-height:170px;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:6px;box-shadow:0 8px 20px rgba(0,0,0,.35);transition:.15s}
+.pack-card:hover{transform:translateY(-3px)}
+.pack-card img{width:88px;height:88px;object-fit:contain;filter:drop-shadow(0 4px 8px rgba(0,0,0,.4))}
+.pack-card .pname{font-weight:900;font-size:15px;text-shadow:0 1px 2px #000}
+.pack-card .pprice{font-size:12px;font-weight:800;opacity:.9}
+.pack-card .open-btn{margin-top:4px;background:rgba(0,0,0,.35);padding:6px 14px;border-radius:10px;font-weight:800;font-size:12px}
+.pack-filters{display:flex;gap:8px;overflow-x:auto;padding-bottom:10px;margin-bottom:12px}
+.pack-filters img{width:56px;height:56px;border-radius:12px;object-fit:cover;cursor:pointer;border:2px solid transparent;background:#1a1626;flex-shrink:0}
+.pack-filters img.active{border-color:var(--purple);box-shadow:0 0 0 2px rgba(124,92,255,.3)}
+.bazaar-toolbar{display:flex;gap:10px;align-items:center;margin-bottom:14px;flex-wrap:wrap}
+.bazaar-toolbar input{flex:1;min-width:160px;padding:10px 12px;border-radius:12px;border:1px solid var(--border);background:#1a1626}
+.empty{text-align:center;padding:48px 16px;color:var(--muted)}
+.empty .big{font-size:40px;margin-bottom:8px;opacity:.5}
+.pack-section{margin-bottom:22px}
+.pack-section h3{font-size:18px;font-weight:900;margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--border)}
+.blook-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(72px,1fr));gap:8px}
+.blook-slot{aspect-ratio:1;border-radius:12px;background:#0f0d16;border:1px solid #252033;display:grid;place-items:center;position:relative;overflow:hidden}
+.blook-slot.locked{opacity:.55}
+.blook-slot.locked::after{content:"🔒";font-size:18px;opacity:.7}
+.blook-slot img{width:85%;height:85%;object-fit:contain}
+.blook-slot .qty{position:absolute;top:3px;right:5px;font-size:11px;font-weight:900;background:rgba(0,0,0,.55);padding:1px 5px;border-radius:6px}
+.blook-slot.owned{border-color:#3a3550;background:#161222}
+.rarity-bar{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.rarity-bar button{padding:6px 12px;border-radius:999px;font-size:12px;font-weight:800;border:1px solid var(--border);background:var(--panel2);color:var(--muted)}
+.rarity-bar button.active{color:#fff;border-color:var(--purple);background:rgba(124,92,255,.2)}
+.craft-layout{display:grid;grid-template-columns:1.1fr .9fr;gap:16px}
+@media(max-width:900px){.craft-layout{grid-template-columns:1fr}.stat-grid{grid-template-columns:1fr 1fr}.profile-row{grid-template-columns:1fr}.tools-row{position:static;margin-bottom:8px}.claim-btn{position:static;margin-top:10px}}
+.slots-row{display:flex;gap:8px;margin:12px 0}
+.slot-plus{width:64px;height:64px;border-radius:12px;border:2px dashed #3a3550;display:grid;place-items:center;color:#5a5470;font-size:22px;cursor:pointer;background:#12101a}
+.slot-plus.filled{border-style:solid;border-color:#4a3f70}
+.slot-plus img{width:48px;height:48px;object-fit:contain}
+.craft-btn{width:100%;padding:14px;border-radius:12px;font-weight:900;font-size:15px;background:linear-gradient(90deg,#f59e0b,#ea580c);color:#fff;margin-top:12px}
+.inv-mini{display:flex;flex-wrap:wrap;gap:8px;max-height:180px;overflow:auto;margin-top:10px}
+.inv-mini .blook-slot{width:56px;height:56px;cursor:pointer}
+.center-empty{max-width:480px;margin:40px auto;text-align:center}
+.center-empty .icon-circle{width:72px;height:72px;border-radius:50%;background:rgba(124,92,255,.2);display:grid;place-items:center;margin:0 auto 16px;font-size:28px}
+.row-input{display:flex;gap:8px;margin-top:16px}
+.row-input input,.row-input select{flex:1;padding:12px 14px;border-radius:12px;border:1px solid var(--border);background:#1a1626}
+.chat-box{background:var(--panel);border:1px solid var(--border);border-radius:16px;display:flex;flex-direction:column;height:min(60vh,520px)}
+.chat-msgs{flex:1;overflow:auto;padding:16px;display:flex;flex-direction:column;gap:8px}
+.chat-msg{font-size:14px}
+.chat-msg .who{font-weight:900;color:#7dd3fc;margin-right:6px}
+.chat-msg .txt{color:#e8a0a0}
+.chat-input{display:flex;gap:8px;padding:12px;border-top:1px solid var(--border)}
+.chat-input input{flex:1;padding:12px;border-radius:12px;border:1px solid var(--border);background:#1a1626}
+.lb-tabs{display:flex;gap:8px}
+.lb-tabs button{padding:8px 14px;border-radius:10px;font-weight:800;background:var(--panel2);border:1px solid var(--border);color:var(--muted)}
+.lb-tabs button.active{background:var(--purple);color:#fff;border-color:var(--purple)}
+.lb-list{margin-top:16px}
+.lb-row{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:12px;background:var(--panel);border:1px solid var(--border);margin-bottom:8px}
+.lb-row .rank{width:28px;font-weight:900;color:var(--gold)}
+.store-hero{max-width:640px;margin:20px auto;background:linear-gradient(180deg,#1a1535,#12101f);border:1px solid #3a2f6a;border-radius:20px;padding:28px;text-align:center;box-shadow:0 0 40px rgba(80,60,180,.25)}
+.store-hero .badge{display:inline-block;background:#2a2050;color:#a78bfa;font-size:11px;font-weight:900;letter-spacing:.1em;padding:4px 10px;border-radius:999px;margin-bottom:10px}
+.store-hero h1{font-size:28px;font-weight:900;color:#7dd3fc;margin-bottom:6px}
+.store-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:20px 0}
+.store-item{background:rgba(0,0,0,.25);border:1px solid #2a2438;border-radius:12px;padding:12px 8px;font-size:12px;font-weight:800}
+.store-item .em{font-size:22px;margin-bottom:6px}
+.btn-buy{width:100%;padding:14px;border-radius:12px;font-weight:900;font-size:16px;background:linear-gradient(90deg,#3b82f6,#06b6d4);color:#fff}
+#openModal .modal{text-align:center;max-width:340px}
+#openModal img{width:120px;height:120px;object-fit:contain;margin:8px auto}
+#openModal .rarity{font-weight:900;margin:6px 0 14px}
+.mine-area{text-align:center;padding:40px}
+.mine-btn{width:140px;height:140px;border-radius:50%;border:4px solid var(--purple);font-size:22px;font-weight:900;background:radial-gradient(circle at 30% 30%,#2a2050,#12101a);box-shadow:0 0 30px rgba(124,92,255,.3)}
+.mine-btn:active{transform:scale(.96)}
+.settings-list{display:flex;flex-direction:column;gap:16px;max-width:420px}
+.settings-list .field{margin:0}
+</style>
+</head>
+<body>
+<div id="landing">
+  <div class="landing-card">
+    <div class="logo-mark"><span>C</span></div>
+    <h1>WELCOME TO</h1>
+    <div class="title">CLOAKET</div>
+    <p>Collect rare blooks, open packs, trade with friends, and dominate the leaderboard.</p>
+    <div class="btn-row">
+      <button class="btn btn-primary" onclick="openRegister()">PLAY NOW</button>
+      <button class="btn btn-ghost" onclick="openLogin()">SIGN IN</button>
+    </div>
+  </div>
+</div>
+<div class="modal-bg" id="regModal">
+  <div class="modal">
+    <div class="logo-mark logo-sm" style="margin-bottom:8px"><span>C</span></div>
+    <h2 class="text-rainbow">CLOAKET</h2>
+    <div class="sub">Join the private server</div>
+    <div class="field"><label>USERNAME</label><input id="regUser" placeholder="3-20 characters" maxlength="20"></div>
+    <div class="field"><label>PASSWORD</label><input id="regPass" type="password" placeholder="At least 8 characters"></div>
+    <div class="field"><label>CONFIRM PASSWORD</label><input id="regPass2" type="password" placeholder="Repeat password"></div>
+    <button class="btn btn-primary" onclick="doRegister()">SIGN UP</button>
+    <div class="err" id="regErr"></div>
+    <div class="switch">Have an account? <a onclick="closeModals();openLogin()">Sign in</a></div>
+  </div>
+</div>
+<div class="modal-bg" id="loginModal">
+  <div class="modal">
+    <div class="logo-mark logo-sm" style="margin-bottom:8px"><span>C</span></div>
+    <h2 class="text-rainbow">CLOAKET</h2>
+    <div class="sub">Welcome back</div>
+    <div class="field"><label>USERNAME</label><input id="loginUser" placeholder="Your username"></div>
+    <div class="field"><label>PASSWORD</label><input id="loginPass" type="password" placeholder="Your password"></div>
+    <button class="btn btn-primary" onclick="doLogin()">SIGN IN</button>
+    <div class="err" id="loginErr"></div>
+    <div class="switch">New here? <a onclick="closeModals();openRegister()">Create account</a></div>
+  </div>
+</div>
+<div class="modal-bg" id="openModal">
+  <div class="modal">
+    <img id="openImg" src="" alt="">
+    <h2 id="openName">Blook</h2>
+    <div class="rarity" id="openRarity">Common</div>
+    <button class="btn btn-primary" onclick="closeOpen()">Continue</button>
+  </div>
+</div>
+<div id="app">
+  <aside class="sidebar">
+    <div class="side-brand"><div class="logo-mark logo-sm"><span>C</span></div><span class="text-rainbow">CLOAKET</span></div>
+    <nav id="nav"></nav>
+    <div class="side-spacer"></div>
+    <div class="side-bottom">
+      <button class="nav-item store" data-page="store" onclick="showPage('store')"><span class="ico">$</span>Store</button>
+      <button class="nav-item logout" onclick="logout()"><span class="ico">↩</span>Log out</button>
+    </div>
+  </aside>
+  <div class="main">
+    <div class="topbar">
+      <div class="chip"><span class="coin">⬤</span> <span id="chipTokens">0</span></div>
+      <div class="chip" id="chipUser">Player</div>
+      <div class="chip" title="Help">?</div>
+    </div>
+    <div class="content">
+      <section id="page-stats" class="page active">
+        <div class="profile-row">
+          <div class="avatar-box" onclick="alert('Avatar picker coming soon')"><div class="av">👤</div><span>Change Avatar</span></div>
+          <div class="profile-card">
+            <button class="btn btn-gold btn-sm claim-btn" onclick="claimDaily()">CLAIM 4,000 DAILY TOKENS</button>
+            <div class="tools-row">
+              <input class="search-mini" id="playerSearch" placeholder="Search player...">
+              <button class="btn btn-ghost btn-sm" onclick="viewPlayerStats()">View Stats</button>
+            </div>
+            <h2><span id="statName">Player</span> <span class="edit" onclick="showPage('settings')">✎</span></h2>
+            <div class="desc">Collection overview and history.</div>
+            <div class="xp-row">
+              <div class="lvl-badge"><b id="statLevel">1</b><small>LEVEL</small></div>
+              <div style="flex:1">
+                <div style="display:flex;justify-content:space-between;font-size:11px;font-weight:800;color:var(--muted);margin-bottom:4px"><span>EXPERIENCE</span><span id="statXpLabel">0 XP</span></div>
+                <div class="xp-bar"><i id="xpFill"></i></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="stat-panel">
+          <h3>STATS</h3>
+          <div class="stat-grid">
+            <div class="stat-card"><div class="icon" style="background:#3a2f10">🪙</div><div><div class="val" id="sTokens">0</div><div class="lbl">TOKENS</div></div></div>
+            <div class="stat-card"><div class="icon" style="background:#2a1a40">🔒</div><div><div class="val" id="sBlooks">0 / 0</div><div class="lbl">BLOOKS</div></div></div>
+            <div class="stat-card"><div class="icon" style="background:#0f2a1a">📦</div><div><div class="val" id="sOpened">0</div><div class="lbl">OPENED</div></div></div>
+            <div class="stat-card"><div class="icon" style="background:#0f1a2a">💬</div><div><div class="val" id="sMessages">0</div><div class="lbl">MESSAGES</div></div></div>
+          </div>
+        </div>
+      </section>
+      <section id="page-mine" class="page"><div class="page-head"><h1>Mine</h1></div><div class="mine-area"><button class="mine-btn" onclick="doMine()">MINE</button><p class="muted" style="margin-top:16px" id="mineStatus">Mine for tokens</p><p id="mineResult" style="font-weight:900;margin-top:8px;font-size:18px"></p></div></section>
+      <section id="page-market" class="page"><div class="page-head"><h1>Market</h1><span class="muted">Open packs · real odds</span></div><div class="grid-packs" id="marketGrid"></div></section>
+      <section id="page-blooks" class="page"><div class="page-head"><h1>My Blooks</h1></div><div class="rarity-bar" id="rarityBar"></div><div id="blooksByPack"></div></section>
+      <section id="page-bazaar" class="page">
+        <div class="page-head"><h1>Bazaar</h1><button class="btn btn-ghost btn-sm" onclick="showMyListings()">My Listings</button></div>
+        <div class="pack-filters" id="bazaarFilters"></div>
+        <div class="bazaar-toolbar"><input id="bazaarSearch" placeholder="Search..." oninput="renderBazaar()"><button class="btn btn-ghost btn-sm" onclick="document.getElementById('bazaarSearch').value='';renderBazaar()">Clear Filters</button></div>
+        <div class="card"><div style="display:flex;justify-content:space-between;margin-bottom:12px"><span class="muted" id="bazaarCount">Results: 0</span><span class="chip" style="padding:4px 10px">BAZAAR</span></div><div id="bazaarList"></div></div>
+        <div class="card" style="margin-top:14px"><h3 style="margin-bottom:10px">Create listing</h3><div class="row-input"><select id="listBlook"></select><input id="listPrice" type="number" min="1" placeholder="Price" style="width:100px"><button class="btn btn-primary btn-sm" onclick="createListing()">List</button></div></div>
+      </section>
+      <section id="page-craft" class="page">
+        <div class="page-head"><h1>🔨 Craft</h1><span class="muted">Put in 2 to 5 blooks — get back 1 of 5 possible. Risky.</span></div>
+        <div class="craft-layout">
+          <div class="card"><div class="muted" style="font-size:12px;font-weight:800;letter-spacing:.08em">INGREDIENTS (<span id="craftCount">0</span>/5)</div><div class="slots-row" id="craftSlots"></div><input id="craftSearch" placeholder="Search your blooks..." style="width:100%;padding:10px;border-radius:12px;border:1px solid var(--border);background:#1a1626;margin-top:8px" oninput="renderCraftInv()"><div class="inv-mini" id="craftInv"></div></div>
+          <div class="card"><div class="muted" style="font-size:12px;font-weight:800;letter-spacing:.08em">POSSIBLE RESULTS</div><div class="empty" id="craftResults"><div class="big">🔨</div>Add blooks to see what you could craft.</div><div style="margin-top:12px;font-size:13px"><span style="color:var(--green)">● 2.5x Craft Luck</span> <span class="muted">— Starter Bundle</span></div><button class="craft-btn" onclick="doCraft()">🔨 CRAFT — 50 tokens</button><p class="muted" style="font-size:11px;margin-top:8px">Costs 50 tokens. Ingredients consumed.</p></div>
+        </div>
+      </section>
+      <section id="page-trade" class="page"><div class="card center-empty"><div class="icon-circle">⇄</div><h1 style="font-size:28px;margin-bottom:8px">Live Trading</h1><p class="muted">Trade blooks and tokens with other players.</p><div class="row-input"><input id="tradeUser" placeholder="Enter a username..."><button class="btn btn-primary" onclick="sendTradeRequest()">Send Request</button></div><div id="tradeList" style="margin-top:20px;text-align:left"></div></div></section>
+      <section id="page-clans" class="page"><div class="page-head"><div><h1>Clans</h1><p class="muted">Join a clan to chat, trade, and dominate together.</p></div><button class="btn btn-primary" onclick="createClan()">+ Create Clan</button></div><input id="clanSearch" placeholder="Search clans or owners..." style="width:100%;padding:12px;border-radius:12px;border:1px solid var(--border);background:#1a1626;margin-bottom:14px" oninput="renderClans()"><div id="clanList"></div></section>
+      <section id="page-friends" class="page"><div class="card"><div class="row-input" style="margin-top:0"><input id="friendUser" placeholder="Add a friend by username..."><button class="btn btn-primary" onclick="addFriend()">Add</button></div><div style="margin-top:18px"><h3 style="margin-bottom:10px">👥 Friends (<span id="friendCount">0</span>)</h3><div id="friendList" class="muted">No friends yet.</div></div></div></section>
+      <section id="page-chat" class="page"><div class="chat-box"><div style="padding:12px 16px;border-bottom:1px solid var(--border);font-weight:900;display:flex;align-items:center;gap:8px">GLOBAL CHAT <span style="width:8px;height:8px;border-radius:50%;background:var(--green);display:inline-block"></span><span class="muted" style="font-weight:700;font-size:12px" id="chatOnline">1</span></div><div class="chat-msgs" id="chatMsgs"></div><div class="chat-input"><input id="chatInput" placeholder="Type a message..." onkeydown="if(event.key==='Enter')sendChat()"><button class="btn btn-primary" onclick="sendChat()">SEND</button></div></div></section>
+      <section id="page-leaderboard" class="page"><div class="page-head"><div><h1>Leaderboard</h1><p class="muted">Top players by experience.</p></div><div class="lb-tabs"><button class="active" id="lbXp" onclick="setLbMode('xp')">🏆 XP</button><button id="lbMine" onclick="setLbMode('mine')">⛏ MINE RATE</button></div></div><div class="lb-list" id="lbList"></div></section>
+      <section id="page-gifts" class="page"><div class="page-head"><h1>Gifts</h1></div><div class="card"><div class="row-input" style="margin-top:0"><select id="giftBlook"></select><input id="giftUser" placeholder="Username" style="width:140px"><button class="btn btn-primary btn-sm" onclick="sendGift()">Send gift</button></div><div id="giftList" class="muted" style="margin-top:16px">No gifts.</div></div></section>
+      <section id="page-store" class="page"><div class="store-hero"><div class="badge">LIMITED STARTER BUNDLE</div><h1>CLOAKET STARTER BUNDLE</h1><p class="muted">One purchase. Nine permanent rewards.</p><div class="store-grid"><div class="store-item"><div class="em">🪙</div>75,000<br>TOKENS</div><div class="store-item"><div class="em">👑</div>Golden Name</div><div class="store-item"><div class="em">💎</div>2 Random Chromas</div><div class="store-item"><div class="em">🎨</div>Text Colors</div><div class="store-item"><div class="em">🅰</div>Name Colors</div><div class="store-item"><div class="em">🍀</div>2.5x Craft Luck</div><div class="store-item"><div class="em">⬆</div>2 Clan Boosts</div><div class="store-item"><div class="em">🌈</div>Rainbow Clan Name</div></div><button class="btn-buy" onclick="buyStarter()">BUY NOW — $4.99</button><p class="muted" style="font-size:11px;margin-top:10px">🔒 Demo checkout — no real payment</p></div><div class="card" style="max-width:400px;margin:20px auto"><h3 style="margin-bottom:10px">Daily Tokens</h3><p class="muted" style="margin-bottom:10px">+4,000 tokens / day</p><button class="btn btn-gold" style="width:100%" onclick="claimDaily()">Claim</button></div></section>
+      <section id="page-admin" class="page"><div class="page-head"><h1>Owner / Admin</h1></div><div class="card settings-list"><div class="field"><label>GIVE TOKENS — PLAYER</label><input id="admUser" placeholder="username"></div><div class="field"><label>AMOUNT</label><input id="admAmt" type="number" value="1000"></div><button class="btn btn-primary" onclick="adminGive()">Give tokens</button><div class="field" style="margin-top:12px"><label>SET ROLE</label><select id="admRole" style="width:100%;padding:12px;border-radius:12px;background:#1a1626;border:1px solid var(--border)"><option>player</option><option>mod</option><option>admin</option><option>coowner</option><option>owner</option></select></div><button class="btn btn-ghost" onclick="adminRole()">Set role</button></div></section>
+      <section id="page-settings" class="page"><div class="page-head"><h1>Settings</h1></div><div class="card settings-list"><div class="field"><label>CHANGE USERNAME</label><input id="setUser" placeholder="New username"></div><button class="btn btn-primary btn-sm" onclick="changeUsername()">Save</button><div class="field"><label>CHANGE PASSWORD</label><input id="setPass" type="password" placeholder="New password"></div><button class="btn btn-primary btn-sm" onclick="changePassword()">Save</button><button class="btn btn-danger" style="margin-top:12px" onclick="deleteAccount()">Delete account</button></div></section>
+    </div>
+  </div>
+</div>
+<script src="catalog.js"></script>
+<script src="game.js"></script>
+</body>
+</html>
