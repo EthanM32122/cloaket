@@ -87,6 +87,18 @@ function showPage(page){
   if(nav)nav.classList.add('active');
   refreshUI();
 }
+function ensureMineUI(){
+  var page=document.getElementById('page-mine');
+  if(!page||document.getElementById('mineHopper'))return;
+  page.innerHTML='<div class="page-head"><h1>Token Mine</h1><span class="muted">Send miners down the shaft for tokens</span></div><div style="display:grid;grid-template-columns:1.2fr 1fr;gap:16px" class="mine-grid"><div class="card" style="text-align:center;padding:28px"><div style="font-size:13px;font-weight:800;letter-spacing:.12em;color:hsl(var(--muted));margin-bottom:8px">ORE HOPPER</div><div style="font-size:42px;font-weight:900" id="mineHopper">0</div><div class="muted" style="margin-bottom:18px">Tokens dug up</div><button class="mine-btn" onclick="doMine()" id="mineBtn">⛏ DIG</button><p class="muted" style="margin-top:16px" id="mineStatus">Click to dig · cooldown applies</p><p id="mineResult" style="font-weight:900;margin-top:10px;font-size:20px;color:var(--gold)"></p></div><div style="display:flex;flex-direction:column;gap:12px"><div class="card"><div style="font-size:12px;font-weight:800;letter-spacing:.1em;color:hsl(var(--muted));margin-bottom:10px">DIG RATE</div><div style="display:flex;justify-content:space-between;align-items:center"><span class="muted">Per dig</span><b id="mineRate">+25–80</b></div><div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px"><span class="muted">Lifetimeined total</span><b id="mineTotal">0</b></div></div><div class="card"><div style="font-size:12px;font-weight:800;letter-spacing:.1em;color:hsl(var(--muted));margin-bottom:10px">MINING CREW</div><div id="mineCrew" class="muted">No hired miners yet. Dig or hire to boost.</div><button class="btn btn-primary btn-sm" style="margin-top:12px;width:100%" onclick="hireMiner()">Hire Miner — 500 tokens</button></div></div></div>';
+}
+function ensureClanPanel(){
+  if(document.getElementById('myClanPanel'))return;
+  var list=document.getElementById('clanList');
+  if(!list)return;
+  var d=document.createElement('div');d.id='myClanPanel';d.style.marginBottom='16px';
+  list.parentNode.insertBefore(d,list);
+}
 function refreshUI(){
   try{refreshMine()}catch(e){}
   const u=currentUser();if(!u)return;
@@ -305,6 +317,7 @@ function hireMiner(){
   d.tokens-=500;d.miners=(d.miners||0)+1;saveData(u,d);refreshMine();refreshUI();
 }
 function refreshMine(){
+  ensureMineUI();ensureClanPanel();
   var d=getData(currentUser());
   var hop=document.getElementById('mineHopper');if(hop)hop.textContent=(d.mined||0).toLocaleString();
   var tot=document.getElementById('mineTotal');if(tot)tot.textContent=(d.mined||0).toLocaleString();
@@ -338,6 +351,7 @@ function sendTradeRequest(){
   setGlobal('trades',trades);alert('Request sent');renderTrade();
 }
 function renderClans(){
+  ensureClanPanel();
   const list=document.getElementById('clanList');if(!list)return;
   const q=(document.getElementById('clanSearch')&&document.getElementById('clanSearch').value||'').toLowerCase();
   let clans=getGlobal('clans',[]);
