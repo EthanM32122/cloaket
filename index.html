@@ -21,7 +21,6 @@
     overflow-x: hidden;
   }
 
-  /* Rainbow text */
   .rainbow {
     background: linear-gradient(90deg, #ef4444, #f59e0b, #22c55e, #3b82f6, #8b5cf6, #ec4899, #ef4444);
     background-size: 300% 100%;
@@ -30,7 +29,6 @@
     background-clip: text;
   }
 
-  /* ========== LANDING PAGE ========== */
   #landing {
     display: flex;
     min-height: 100vh;
@@ -85,11 +83,8 @@
     cursor: pointer;
     font-family: inherit;
   }
-  .get-started-btn:hover {
-    background: #2e1065;
-  }
+  .get-started-btn:hover { background: #2e1065; }
 
-  /* Top right Login/Register */
   .top-auth {
     position: absolute;
     top: 24px;
@@ -104,16 +99,12 @@
     font-weight: 700;
     font-size: 0.95rem;
     cursor: pointer;
-    border: none;
     font-family: inherit;
     background: #1a1025;
     border: 1px solid #4c1d95;
   }
-  .top-auth button:hover {
-    background: #2e1065;
-  }
+  .top-auth button:hover { background: #2e1065; }
 
-  /* ========== MODALS ========== */
   .modal-overlay {
     position: fixed;
     inset: 0;
@@ -201,7 +192,6 @@
     min-height: 20px;
   }
 
-  /* ========== APP LAYOUT ========== */
   #app {
     display: none;
     min-height: 100vh;
@@ -209,47 +199,48 @@
   }
   #app.active { display: flex; }
 
-  /* LEFT NAVBAR */
   .sidebar {
-    width: 230px;
+    width: 260px;
     background: #1a1025;
     color: white;
     display: flex;
     flex-direction: column;
-    padding: 24px 14px;
+    padding: 28px 16px;
     border-right: 1px solid #2e1065;
+    flex-shrink: 0;
   }
 
   .sidebar-logo {
-    font-size: 1.7rem;
+    font-size: 2.1rem;
     font-weight: 900;
     text-align: center;
-    margin-bottom: 6px;
+    margin-bottom: 8px;
   }
 
   .sidebar-user {
     text-align: center;
-    font-size: 0.9rem;
-    opacity: 0.7;
-    margin-bottom: 28px;
+    font-size: 1.05rem;
+    opacity: 0.75;
+    margin-bottom: 32px;
   }
 
   .nav-item {
     display: flex;
     align-items: center;
-    gap: 12px;
-    padding: 13px 16px;
-    border-radius: 10px;
+    gap: 14px;
+    padding: 16px 18px;
+    border-radius: 12px;
     cursor: pointer;
-    margin-bottom: 4px;
-    font-weight: 600;
-    color: rgba(255,255,255,0.8);
+    margin-bottom: 8px;
+    font-weight: 700;
+    font-size: 1.15rem;
+    color: rgba(255,255,255,0.85);
   }
   .nav-item:hover, .nav-item.active {
     background: #2e1065;
     color: white;
   }
-  .nav-item .icon { font-size: 1.2rem; }
+  .nav-item .icon { font-size: 1.5rem; }
 
   .sidebar-bottom {
     margin-top: auto;
@@ -257,88 +248,92 @@
   }
   .logout-btn {
     width: 100%;
-    padding: 12px;
+    padding: 14px;
     background: transparent;
     border: 1px solid #4c1d95;
-    border-radius: 10px;
-    font-weight: 600;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 1.05rem;
     cursor: pointer;
     font-family: inherit;
     color: #c4b5fd;
   }
   .logout-btn:hover { background: #2e1065; }
 
-  /* MAIN CONTENT */
   .main-content {
     flex: 1;
-    padding: 32px 40px;
+    padding: 48px 56px;
     overflow-y: auto;
+    min-width: 0;
   }
-
-  .page-title {
-    font-size: 1.8rem;
-    font-weight: 800;
-    margin-bottom: 6px;
-  }
-
-  .stats-bar {
-    display: flex;
-    gap: 14px;
-    margin-bottom: 28px;
-    flex-wrap: wrap;
-  }
-  .stat-card {
-    background: #1a1025;
-    border: 1px solid #2e1065;
-    border-radius: 14px;
-    padding: 18px 24px;
-    min-width: 130px;
-    text-align: center;
-  }
-  .stat-value {
-    font-size: 1.7rem;
-    font-weight: 800;
-  }
-  .stat-label { font-size: 0.85rem; opacity: 0.7; margin-top: 4px; }
 
   .panel-view {
     display: none;
-    background: #1a1025;
-    border: 1px solid #2e1065;
-    border-radius: 16px;
-    padding: 28px;
-    max-width: 650px;
+    width: 100%;
+    max-width: none;
+    background: none;
+    border: none;
+    padding: 0;
   }
   .panel-view.active { display: block; }
 
   .panel-view h2 {
-    margin-bottom: 18px;
-    font-size: 1.4rem;
-    font-weight: 800;
+    margin-bottom: 28px;
+    font-size: 3rem;
+    font-weight: 900;
+    letter-spacing: -1px;
   }
 
-  .blank-area {
-    background: #0f0a1a;
-    border: 1px dashed #4c1d95;
-    border-radius: 12px;
-    padding: 40px 20px;
-    text-align: center;
+  .stats-bar {
+    display: flex;
+    gap: 48px;
+    margin-bottom: 36px;
+    flex-wrap: wrap;
+  }
+  .stat-card {
+    background: none;
+    border: none;
+    padding: 0;
+    min-width: 160px;
+    text-align: left;
+  }
+  .stat-value {
+    font-size: 3.4rem;
+    font-weight: 900;
+    line-height: 1;
+  }
+  .stat-label {
+    font-size: 1.15rem;
+    opacity: 0.7;
+    margin-top: 10px;
+  }
+
+  .page-body {
+    font-size: 1.35rem;
     font-weight: 600;
-    opacity: 0.8;
+    line-height: 1.6;
+    opacity: 0.85;
+  }
+  .page-body small {
+    display: block;
+    margin-top: 8px;
+    font-size: 1.05rem;
+    opacity: 0.65;
   }
 
   @media (max-width: 768px) {
     #landing { flex-direction: column; }
     .landing-right { min-height: 150px; }
-    .sidebar { width: 70px; }
+    .sidebar { width: 78px; padding: 20px 8px; }
     .nav-item span:not(.icon) { display: none; }
-    .sidebar-logo { font-size: 1.1rem; }
+    .sidebar-logo { font-size: 1.2rem; }
+    .main-content { padding: 28px 20px; }
+    .panel-view h2 { font-size: 2.2rem; }
   }
 </style>
 </head>
 <body>
 
-<!-- ========== LANDING ========== -->
 <div id="landing">
   <div class="top-auth">
     <button class="login-btn" onclick="openModal('login')"><span class="rainbow">Login</span></button>
@@ -360,7 +355,6 @@
   <div class="landing-right"></div>
 </div>
 
-<!-- ========== MODALS ========== -->
 <div class="modal-overlay" id="loginModal">
   <div class="modal">
     <div class="modal-header">
@@ -394,7 +388,6 @@
   </div>
 </div>
 
-<!-- ========== APP ========== -->
 <div id="app">
   <div class="sidebar">
     <div class="sidebar-logo"><span class="rainbow">Cloaket</span></div>
@@ -434,27 +427,27 @@
           <div class="stat-label">Items</div>
         </div>
       </div>
-      <div class="blank-area">More detailed stats coming soon.</div>
+      <div class="page-body">More detailed stats coming soon.</div>
     </div>
 
     <div id="page-market" class="panel-view">
       <h2 class="rainbow">Cloaks Market</h2>
-      <div class="blank-area">Market is currently empty.<br><small style="opacity:0.6">New cloaks coming soon...</small></div>
+      <div class="page-body">Market is currently empty.<small>New cloaks coming soon...</small></div>
     </div>
 
     <div id="page-inventory" class="panel-view">
       <h2 class="rainbow">Inventory</h2>
-      <div class="blank-area">Your inventory is empty.<br><small style="opacity:0.6">Collect cloaks and items here.</small></div>
+      <div class="page-body">Your inventory is empty.<small>Collect cloaks and items here.</small></div>
     </div>
 
     <div id="page-leaderboard" class="panel-view">
       <h2 class="rainbow">Leaderboard</h2>
-      <div class="blank-area">No rankings yet.<br><small style="opacity:0.6">Check back later!</small></div>
+      <div class="page-body">No rankings yet.<small>Check back later!</small></div>
     </div>
 
     <div id="page-settings" class="panel-view">
       <h2 class="rainbow">Settings</h2>
-      <div class="blank-area">Settings coming soon.<br><small style="opacity:0.6">Account options will appear here.</small></div>
+      <div class="page-body">Settings coming soon.<small>Account options will appear here.</small></div>
     </div>
   </div>
 </div>
@@ -557,7 +550,7 @@
   function showPage(page) {
     document.querySelectorAll('.panel-view').forEach(p => p.classList.remove('active'));
     document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-    const nav = document.querySelector(`.nav-item[data-page="${page}"]`);
+    const nav = document.querySelector('.nav-item[data-page="' + page + '"]');
     if (nav) nav.classList.add('active');
     const panel = document.getElementById('page-' + page);
     if (panel) panel.classList.add('active');
