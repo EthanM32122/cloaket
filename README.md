@@ -1,36 +1,32 @@
-# Cloaket
+# Cloaket.org / Musiclet
 
-A purple cloak-themed Blooket-style learning game.
+**Musiclet** – a Blooket-inspired music quiz platform.
+Coded and owned by Ethan32.
 
-## Deploy on Vercel (Recommended - Free & Fast)
-
-1. Go to [vercel.com](https://vercel.com) and log in (use your GitHub account)
-2. Click **Add New...** → **Project**
-3. Import the repository: **EthanM32122/cloaket**
-4. Leave all settings as default (Vercel auto-detects it as a static site)
-5. Click **Deploy**
-
-Your site will be live in ~30 seconds at a link like:
-`https://cloaket.vercel.app`
-
-You can later add a custom domain in the Vercel dashboard.
-
----
-
-## Alternative: Deploy on Render.com
-
-1. Go to [render.com](https://render.com) → **New +** → **Static Site**
-2. Connect this GitHub repository
-3. Settings:
-   - **Name**: cloaket
-   - **Branch**: main
-   - **Root Directory**: (empty)
-   - **Build Command**: (empty)
-   - **Publish Directory**: `.`
-4. Click **Create Static Site**
+Live link (after deploying):
+- GitHub repo: https://github.com/EthanM32122/cloaket
+- Recommended free host: Vercel → import this repo → get `https://cloaket.vercel.app`
+- Then add custom domain **cloaket.org** in Vercel settings (if you own the domain).
 
 ## Features
-- Login & Register system
-- In-game Lobby with Stats, Cloaks Market, Inventory, Leaderboard
-- Classic question race mode
-- Local storage for accounts and stats
+- Landing page matching the original design (checkered background, logo, LOGIN! / REGISTER buttons)
+- Working Register page
+- Working Login page
+- Simple dashboard after login
+- Accounts saved in browser localStorage
+
+## How to run locally
+1. Open `index.html` in any browser
+2. Or use a local server: `npx serve .`
+
+## Deploy on Vercel (free & recommended for custom domain)
+1. Go to [vercel.com](https://vercel.com) and sign in with GitHub
+2. **Add New… → Project**
+3. Import **EthanM32122/cloaket**
+4. Deploy (defaults are fine)
+5. In Project Settings → Domains, add `cloaket.org` (requires you to own the domain and point DNS)
+
+## Files
+- `index.html` – pages (landing / register / login / dashboard)
+- `styles.css` – all styling
+- `app.js` – login/register logic + localStorage
